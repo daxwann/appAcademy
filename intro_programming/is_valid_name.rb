@@ -11,12 +11,11 @@ def is_valid_name(str)
   	return false
   end
   arr.each do |word|
-    if word[0] == word[0].upcase && word[1..-1] == word[1..-1].downcase
-      return true
-    else
+    if word[0] == word[0].upcase && word[1..-1] != word[1..-1].downcase
       return false
     end
   end
+  return true
 end
 
 puts is_valid_name("Kush Patel")       # => true
