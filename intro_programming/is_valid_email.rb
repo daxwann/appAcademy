@@ -1,3 +1,6 @@
+# Write a method is_valid_email that takes in a string and returns a boolean 
+# indicating whether or not it is a valid email address.
+#
 # For simplicity, we'll consider an email valid when it satisfies all of the following:
 # - contains exactly one @ symbol
 # - contains only lowercase alphabetic letters before the @
