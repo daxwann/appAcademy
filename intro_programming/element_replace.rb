@@ -6,14 +6,10 @@
 def element_replace(arr, hash)
   newArr = []
   arr.each do |ele|
-    if !hash.keys.include?(ele)
-      newArr << ele
+    if hash.has_key?(ele)
+      newArr << hash[ele]
     else
-      hash.each_key do |key|
-        if key == ele
-          newArr << hash[key]
-        end
-      end
+      newArr << ele
     end
   end
   return newArr
