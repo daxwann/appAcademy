@@ -57,19 +57,27 @@ end
 # repeating letters. Capital letters count as repeats of lowercase ones, e.g.,
 # repeating_letters?("Aa") => true
 def repeating_letters?(str)
-  # your code goes here
+  prev = ''
+  str.downcase.each_char do |char|
+    if char == prev
+      return true
+    end
+    prev = char
+  end
+  return false
 end
 
 # Write a method that converts an array of ten integers into a phone number in
 # the format "(123) 456-7890".
 def to_phone_number(arr)
-  # your code goes here
+  return "(" + arr[0..2].join + ") " + arr[3..5].join + "-" + arr[6..-1].join
 end
 
 # Write a method that returns the range of a string of comma-separated integers,
 # e.g., str_range("4,1,8") #=> 7
 def str_range(str)
-  # your code goes here
+  arr = str.split(",").sort
+  return arr.last.to_i - arr.first.to_i
 end
 
 
@@ -80,5 +88,10 @@ end
 # provided. HINT: use the take(num) and drop(num) methods. You won't need much
 # code, but the solution is tricky!
 def my_rotate(arr, offset=1)
-  # your code goes here
+  if offset >= 0
+    num = offset % arr.length
+  else
+    num = arr.length - offset.abs % arr.length
+  end
+  return arr.drop(num) + arr.take(num)
 end
