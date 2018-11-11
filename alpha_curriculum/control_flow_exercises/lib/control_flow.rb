@@ -113,6 +113,10 @@ end
 # Write a method that returns a new array containing all the elements of the
 # original array in reverse order.
 def my_reverse(arr)
+  reverse = []
+  arr.each do |ele|
+    reverse.unshift(ele)
+  end
   return arr.reverse
 end
 
@@ -164,8 +168,15 @@ end
 # Return the one integer in an array that is even or odd while the rest are of
 # opposite parity, e.g. oddball([1,2,3]) => 2, oddball([2,4,5,6] => 5)
 def oddball(arr)
-  odd = arr.select { |int| int % 2 == 1 }
-  even = arr.select { |int| int % 2 == 0 }
+  odd = []
+  even = []
+  arr.each do |num|
+    if num % 2 == 0
+      even << num
+    else
+      odd << num
+    end
+  end
   if odd.length == 1
     return odd[0]
   else
