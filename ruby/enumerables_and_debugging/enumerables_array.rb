@@ -77,5 +77,33 @@ class Array
     return zipped
   end
 
-  def my_rotate
+  def my_rotate(pos=1)
+    pos.times do
+      self.push(self.shift)
+    end
+    return self
+  end
+
+  def my_join(link="")
+    str = ""
+    i = 0
+    while i < self.length
+      if i != 0
+        str += link
+      end
+      str += self[i].to_s
+      i += 1
+    end
+    return str
+  end
+
+  def my_reverse
+    reverse = []
+    i = self.length - 1
+    while i >= 0
+      reverse << self[i]
+      i -= 1
+    end
+    return reverse
+  end
 end
