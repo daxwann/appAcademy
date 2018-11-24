@@ -1,9 +1,14 @@
 class Player
-  def initialize(*names)
-    @players = names
+
+  attr_reader :names
+
+  def initialize(names)
+    @names = names
   end
 
   def guess
+    puts
+    puts "#{@names[0]}, enter a letter:"
     guess = gets.chomp
   end
 

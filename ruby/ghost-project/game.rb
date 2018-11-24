@@ -9,50 +9,65 @@ class Game
     @dictionary = File.read('dictionary.txt').split("\n").to_set
     @score = {}
     @ghost = "GHOST"
+    @round = 1
   end
 
   def run_game
-    @players.each do |player|
+    @players.names.each do |player|
       @score[player] = 0
     end
+    until @players.names.length == 1
+      puts "---------------"
+      puts "Round #{@round}"
+      puts "---------------"
+      puts
+      self.play_round
+      @score.each do |name, score|
+        if score == 5
+          puts "#{name} is eliminated"
+          @players.names.reject! {|player| player == name}
+        end
+      end
+      @round += 1
+    end
+    puts "#{@players.names[0]} wins"
   end
 
   def play_round
-    while take_turn(self.current_player)
+    while self.take_turn
       self.next_player!
     end
-    self.current_player["penalty"] += 1
+    @score[self.current_player] += 1
+    puts "#{self.current_player} has #{@ghost[0...@score[self.current_player]]}"
     @fragment = ""
   end
 
   def current_player
-   @players[0]
-  end
-
-  def previous_player
-   @players[-1]
+   @players.names[0]
   end
 
   def next_player!
-   @players.rotate!
+   @players.names.rotate!
   end
 
-  def take_turn(player)
-    guess = player.guess
+  def take_turn
+    guess = @players.guess
     until valid_play?(guess) do
-      player.alert__invalid_guess
-      guess = player.guess
+      @players.alert_invalid_guess
+      guess = @players.guess
     end
     @fragment += guess
     if @dictionary.include?(@fragment)
+      puts "#{@fragment} is a word"
       return false
     end
+    puts "current fragment: #{@fragment}"
     return true
   end
 
   def valid_play?(letter)
     #check input is a letter
-    if !(letter.is_a? String) && letter.length != 1
+    if !(letter.is_a? String) || letter.length != 1
       return false
     end
     play = @fragment + letter
@@ -66,8 +81,12 @@ class Game
   end
 
   def display_score
-    @players.each do |player|
-      puts "#{player[name]}: #{@score[0..player[penalty]]}"
+    @score.each do |player, score|
+      if score == 0
+        puts "#{player}: none"
+      elsif score < 6
+        puts "#{player}: #{@ghost[0...score]}"
+      end
     end
   end
 end
