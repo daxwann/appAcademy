@@ -3,7 +3,20 @@ require "set"
 
 class Game
   attr_reader :dictionary, :fragment, :players
-  def initialize(*players)
+
+  def self.get_players
+    players = []
+    puts "enter number of players"
+    total = gets.chomp.to_i
+    (1..total).each do |count|
+      puts "Enter player #{count} name. Press Enter to continue."
+      entry = gets.chomp
+      players << entry
+    end
+    return players
+  end
+
+  def initialize(players)
     @players = Player.new(players)
     @fragment = ""
     @dictionary = File.read('dictionary.txt').split("\n").to_set
@@ -13,14 +26,11 @@ class Game
   end
 
   def run_game
+    @players.ai?
     @players.names.each do |player|
       @score[player] = 0
     end
     until @players.names.length == 1
-      puts "---------------"
-      puts "Round #{@round}"
-      puts "---------------"
-      puts
       self.play_round
       @score.each do |name, score|
         if score == 5
@@ -34,6 +44,14 @@ class Game
   end
 
   def play_round
+    if @round > 1
+      self.display_score
+    end
+    puts
+    puts "---------------"
+    puts "Round #{@round}"
+    puts "---------------"
+    puts
     while self.take_turn
       self.next_player!
     end
@@ -51,16 +69,18 @@ class Game
   end
 
   def take_turn
-    guess = @players.guess
+    guess = @players.guess(@dictionary, @fragment)
     until valid_play?(guess) do
       @players.alert_invalid_guess
-      guess = @players.guess
+      guess = @players.guess(@dictionary, @fragment)
     end
     @fragment += guess
     if @dictionary.include?(@fragment)
+      puts
       puts "#{@fragment} is a word"
       return false
     end
+    puts
     puts "current fragment: #{@fragment}"
     return true
   end
@@ -81,6 +101,9 @@ class Game
   end
 
   def display_score
+    puts
+    puts "   Score     "
+    puts "-------------"
     @score.each do |player, score|
       if score == 0
         puts "#{player}: none"
@@ -89,4 +112,10 @@ class Game
       end
     end
   end
+end
+
+if __FILE__ == $PROGRAM_NAME
+  players = Game.get_players
+  game1 = Game.new(players)
+  game1.run_game
 end
