@@ -14,7 +14,10 @@ class Stack
         stack[height] || " "
       end.join("\t")
     end.join("\n")
+    puts "_\t_\t_"
     puts render_string
+    puts "^\t^\t^"
+    puts "a\tb\tc"
   end
 
   def get_stack(prompt)
