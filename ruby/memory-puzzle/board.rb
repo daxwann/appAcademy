@@ -1,14 +1,20 @@
+require_relative "./deck"
+require_relative "./card"
+
 class Board
 
   attr_reader :grid
-  attr_writer :grid
 
-  def initiate
-    @grid = Array.new(5) {[]}
+  def initialize(size)
+    @rows, @cols = size
+    @grid = Array.new(rows)
+    @deck = Deck.new(4)
   end
 
   def populate
-
+    @grid.each do |row|
+      cols.times {row << @deck.draw}
+    end
   end
 
   def [](pos)
@@ -19,5 +25,9 @@ class Board
   def []=(pos, val)
     x, y = pos
     @grid[y][x] = val
+  end
+
+  def won?
+    @grid.flatten.all? { |card| card.face_up? == true }
   end
 end

@@ -1,18 +1,19 @@
-class card
+class Card
 
-  attr_reader :value
+  attr_reader :face_up
 
-  def initialize
-    @value
-    @face_up = 0
+  def initialize(value)
+    @value = value
+    @face_up = false
   end
 
   def hide
-    @face_up = 0
+    @face_up = false
   end
 
   def reveal
-    @face_up = 1
+    @face_up = true
+    @value
   end
 
   def ==(another_card)
