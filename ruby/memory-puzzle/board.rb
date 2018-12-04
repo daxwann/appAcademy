@@ -5,16 +5,36 @@ class Board
 
   attr_reader :grid
 
-  def initialize(size)
-    @rows, @cols = size
-    @grid = Array.new(rows)
+  def initialize
+    @grid = Array.new(4) {Array.new(4)}
     @deck = Deck.new(4)
   end
 
   def populate
+    @deck.shuffle
     @grid.each do |row|
-      cols.times {row << @deck.draw}
+      row.map! do |card|
+        @deck.draw
+      end
     end
+  end
+
+  def render
+    @grid.each do |row|
+      row.each_with_index do |card, idx|
+        print " " if idx > 0
+        if card.face_up == false
+          print "X"
+        else
+          card.reveal
+        end
+      end
+      puts
+    end
+  end
+
+  def reveal(pos)
+    self[pos].reveal
   end
 
   def [](pos)
@@ -24,10 +44,10 @@ class Board
 
   def []=(pos, val)
     x, y = pos
-    @grid[y][x] = val
+    @grid[y][x].face_up = val
   end
 
   def won?
-    @grid.flatten.all? { |card| card.face_up? == true }
+    @grid.flatten.all? { |card| card.face_up == true }
   end
 end

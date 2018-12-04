@@ -17,6 +17,9 @@ class Card
   end
 
   def ==(another_card)
+    if self.face_up == false || another_card.face_up == false
+      return false
+    end
     self.value == another_card.value
   end
 end
