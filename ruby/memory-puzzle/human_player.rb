@@ -3,6 +3,7 @@ class HumanPlayer
 
   def initialize(size)
     @guess = []
+    @size = size
   end
 
   def prompt
@@ -17,17 +18,24 @@ class HumanPlayer
     loop do
       print "#{prompt}: "
       coordinate = gets.chomp.to_i - 1
-      break if valid_num?(coordinate)
+      return coordinate if valid_num?(coordinate)
     end
-    return coordinate
   end
 
   def valid_num?(nb)
-    if nb < 0 || nb >= size
+    if nb < 0 || nb >= @size
       puts "number out of bounds. Try again."
       return false
     end
     return true
+  end
+
+  def receive_revealed_card(value)
+    return
+  end
+
+  def receive_match(pos1, pos2)
+    return
   end
 
 end

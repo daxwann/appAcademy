@@ -24,13 +24,22 @@ class Board
       row.each_with_index do |card, idx|
         print " " if idx > 0
         if card.face_up == false
-          print "X"
+          print "X "
         else
-          print card.reveal
+          num = card.reveal
+          if self.count_digits(num) == 1
+            print "#{num} "
+          else
+            print num
+          end
         end
       end
       puts
     end
+  end
+
+  def count_digits(num)
+    Math.log10(num).to_i + 1
   end
 
   def reveal(pos)

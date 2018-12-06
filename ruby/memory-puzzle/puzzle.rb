@@ -1,10 +1,33 @@
 require_relative "./board"
-require_relative "./player"
+require_relative "./human_player"
+require_relative "./computer_player"
+require "byebug"
 
 class Puzzle
+
+  def self.choose_level
+    puts "Enter level of difficulty (1, 2, or 3):"
+    puts "1. Easy"
+    puts "2. Intermediate"
+    puts "3. Hard"
+    loop do
+      lvl = gets.chomp.to_i
+      case lvl
+      when 1
+        return 2
+      when 2
+        return 4
+      when 3
+        return 6
+      else
+        puts "Wrong number. Pick again."
+      end
+    end
+  end
+
   def initialize(size)
     @board = Board.new(size)
-    @player = HumanPlayer.new(size)
+    @player = ComputerPlayer.new(size)
     @board.populate
     @prev_pos = []
     @current_pos = []
@@ -20,7 +43,7 @@ class Puzzle
       @board.render
       @current_pos = @player.prompt
       if self.valid_guess?
-        @player.receive_revealed_card(@board[@current_pos])
+        @player.receive_revealed_card(@board[@current_pos].value)
         self.make_guess
       end
     end
@@ -75,4 +98,10 @@ class Puzzle
     puts "You win!"
     @board.render
   end
+end
+
+if __FILE__ == $PROGRAM_NAME
+  lvl = Puzzle.choose_level
+  pz1 = Puzzle.new(lvl)
+  pz1.play
 end
