@@ -5,9 +5,9 @@ class Board
 
   attr_reader :grid
 
-  def initialize
-    @grid = Array.new(4) {Array.new(4)}
-    @deck = Deck.new(4)
+  def initialize(size)
+    @grid = Array.new(size) {Array.new(size)}
+    @deck = Deck.new(size)
   end
 
   def populate

@@ -2,9 +2,9 @@ require_relative "./board"
 require_relative "./player"
 
 class Puzzle
-  def initialize
-    @board = Board.new
-    @player = HumanPlayer.new
+  def initialize(size)
+    @board = Board.new(size)
+    @player = HumanPlayer.new(size)
     @board.populate
     @prev_pos = []
     @current_pos = []
@@ -18,8 +18,9 @@ class Puzzle
     until self.over?
       system("clear")
       @board.render
-      @current_pos = @player.get_input
+      @current_pos = @player.prompt
       if self.valid_guess?
+        @player.receive_revealed_card(@board[@current_pos])
         self.make_guess
       end
     end
@@ -44,6 +45,7 @@ class Puzzle
 
     if self.match?
       @board.reveal(@current_pos)
+      @player.receive_match(@current_pos, @prev_pos)
     else
       self.wrong_match
     end

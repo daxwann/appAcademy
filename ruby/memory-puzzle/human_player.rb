@@ -1,30 +1,29 @@
 class HumanPlayer
   attr_reader :guess
 
-  def initialize
-    @x = 0
-    @y = 0
+  def initialize(size)
     @guess = []
   end
 
-  def get_input
+  def prompt
     puts "Enter position to flip card."
-    loop do
-      print "row: "
-      @y = gets.chomp.to_i - 1
-      break if valid_num?(@y)
-    end
-    loop do
-      print "column: "
-      @x = gets.chomp.to_i - 1
-      break if valid_num?(@x)
-    end
+    y = self.get_input("row")
+    x = self.get_input("column")
     puts
-    @guess = [@x, @y]
+    @guess = [x, y]
+  end
+
+  def get_input(prompt)
+    loop do
+      print "#{prompt}: "
+      coordinate = gets.chomp.to_i - 1
+      break if valid_num?(coordinate)
+    end
+    return coordinate
   end
 
   def valid_num?(nb)
-    if nb < 0 || nb >= 4
+    if nb < 0 || nb >= size
       puts "number out of bounds. Try again."
       return false
     end
