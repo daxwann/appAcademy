@@ -26,7 +26,7 @@ class Board
         if card.face_up == false
           print "X"
         else
-          card.reveal
+          print card.reveal
         end
       end
       puts
@@ -35,6 +35,10 @@ class Board
 
   def reveal(pos)
     self[pos].reveal
+  end
+
+  def hide(pos)
+    self[pos].hide
   end
 
   def [](pos)
