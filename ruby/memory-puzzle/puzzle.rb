@@ -14,11 +14,11 @@ class Puzzle
       lvl = gets.chomp.to_i
       case lvl
       when 1
-        return 2
+        return 3
       when 2
         return 4
       when 3
-        return 6
+        return 5
       else
         puts "Wrong number. Pick again."
       end
