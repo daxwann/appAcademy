@@ -5,9 +5,9 @@ class Board
 
   attr_reader :grid
 
-  def initialize
-    @grid = Array.new(4) {Array.new(4)}
-    @deck = Deck.new(4)
+  def initialize(size)
+    @grid = Array.new(size) {Array.new(size)}
+    @deck = Deck.new(size)
   end
 
   def populate
@@ -24,17 +24,30 @@ class Board
       row.each_with_index do |card, idx|
         print " " if idx > 0
         if card.face_up == false
-          print "X"
+          print "X "
         else
-          card.reveal
+          num = card.reveal
+          if self.count_digits(num) == 1
+            print "#{num} "
+          else
+            print num
+          end
         end
       end
       puts
     end
   end
 
+  def count_digits(num)
+    Math.log10(num).to_i + 1
+  end
+
   def reveal(pos)
     self[pos].reveal
+  end
+
+  def hide(pos)
+    self[pos].hide
   end
 
   def [](pos)
