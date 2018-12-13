@@ -61,34 +61,92 @@ class Board
     @board[y][x].change(val)
   end
 
-  def solved?
-    return true if self.rows_ok? && self.cols_ok? && self.squares_ok?
-    return false
+  def move_ok?(pos)
+    x, y = pos
+    x_min = self.find_min(x)
+    y_min = self.find_min(y)
+    return pos_row_ok?(y) && pos_col_ok?(x) && pos_square_ok?(x_min, y_min)
   end
 
-  def reset_cols
-    @cols = Array.new(9) {Array.new}
+  def pos_row_ok?(y)
+    num_set = Hash.new(0)
+    @board[y].each do |tile|
+      return false if tile.value == 0
+      num_set[tile.value] += 1
+      return false if num_set[tile.value] > 1
+    end
+    return true
   end
 
-  def rows_ok?
-    self.reset_cols
-    self.reset_squares
+  def pos_col_ok?(x)
+    num_set = Hash.new(0)
     @board.each do |row|
-      num_set = Hash.new(0)
-      row.each_with_index do |tile, idx|
-        return false if tile.value == 0
-        num_set[tile.value] += 1
-        if num_set[tile.value] > 1
-          return false
-        end
-        @cols[idx] << tile.value
+      return false if row[x].value == 0
+      num_set[row[x].value] += 1
+      return false if num_set[row[x].value] > 1
+    end
+    return true
+  end
+
+  def find_min(coordinate)
+    case coordinate
+    when 0..2
+      return 0
+    when 3..5
+      return 3
+    when 6..8
+      return 6
+    else
+      raise "Invalid coordinate"
+    end
+  end
+
+  def pos_square_ok?(x_min, y_min)
+    num_set = Hash.new(0)
+    (y_min..y_min + 2).each do |row|
+      (x_min..x_min + 2).each do |col|
+        return false if @board[row, col] == 0
+        num_set[@board[row, col]] += 1
+        return false if num_set[@board[row, col]] > 1
       end
     end
     return true
   end
 
-  def col_ok?
+  def board_ok?
+    return false unless self.all_rows_ok?
+    return false unless self.all_cols_ok?
+    return false unless self.all_squares_ok?
+    return true
+  end
 
+  def all_rows_ok?
+    (0..9).each do |row|
+      return false unless self.pos_row_ok?(row)
+    end
+    return true
+  end
+
+  def all_cols_ok?
+    (0..9).each do |col|
+      return false unless self.pos_col_ok?(col)
+    end
+    return true
+  end
+
+  def all_squares_ok?
+    min_coordinate = [0, 3, 6]
+    min_coordinate.each do |x_min|
+      min_coordinate.each do |y_min|
+        return false unless self.pos_square_ok?(x_min, y_min)
+      end
+    end
+    return true
+  end
+
+  def solved?
+    return true if self.board_ok?
+    return false
   end
 
 end
