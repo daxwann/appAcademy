@@ -15,8 +15,9 @@ class Player
   def input_value
     loop do
       puts "enter value"
-      num = gets.chomp.to_i
-      return @val = num if (0..9).include?(num)
+      input = gets.chomp
+      num = input.to_i
+      return num if (0..9).include?(num) && Integer(input)
       puts "Number not valid. Try again."
     end
   end
