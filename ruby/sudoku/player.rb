@@ -17,7 +17,7 @@ class Player
       puts "enter value"
       input = gets.chomp
       num = input.to_i
-      return num if (0..9).include?(num) && Integer(input)
+      return num if (0..9).include?(num) && num.to_s == input
       puts "Number not valid. Try again."
     end
   end

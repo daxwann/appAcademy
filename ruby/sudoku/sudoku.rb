@@ -5,6 +5,7 @@ class Sudoku
   def initialize(file)
     @player = Player.new
     @board = Board.new(file)
+    @board.populate
   end
 
   def select_puzzle
@@ -36,7 +37,8 @@ class Sudoku
 
   def win
     system("clear")
-    puts "You win!"
+    puts "You win!!!"
+    puts
     @board.render
   end
 end

@@ -1,4 +1,6 @@
 require_relative './tile'
+require 'byebug'
+require 'colorize'
 
 class Board
   attr_reader :file, :board
@@ -39,12 +41,24 @@ class Board
   end
 
   def render
-    @board.each do |row|
-      row.each do |tile|
-        print tile.to_s
+    puts
+    puts "   1 2 3 4 5 6 7 8 9"
+    puts "   - - - - - - - - -"
+    @board.each.with_index do |row, i|
+      print "#{i + 1} |"
+      row.each.with_index do |tile, k|
+        print " " if k > 0
+        if tile.given == true
+          print tile.to_s.colorize(:green)
+        else
+          print tile.to_s
+        end
       end
+      print "|"
       puts
     end
+    puts "   - - - - - - - - -"
+    return
   end
 
   def [](pos)
@@ -56,6 +70,7 @@ class Board
     x, y = pos
     if @board[y][x].given == true
       puts "Cannot change value at a given position"
+      sleep(2)
       return false
     end
     @board[y][x].change(val)
@@ -103,17 +118,17 @@ class Board
 
   def pos_square_ok?(x_min, y_min)
     num_set = Hash.new(0)
-    (y_min..y_min + 2).each do |row|
-      (x_min..x_min + 2).each do |col|
-        return false if @board[row, col] == 0
-        num_set[@board[row, col]] += 1
-        return false if num_set[@board[row, col]] > 1
+    (y_min..(y_min + 2)).each do |row|
+      (x_min..(x_min + 2)).each do |col|
+        return false if @board[row][col].value == 0
+        num_set[@board[row][col].value] += 1
+        return false if num_set[@board[row][col].value] > 1
       end
     end
     return true
   end
 
-  def board_ok?
+  def solved?
     return false unless self.all_rows_ok?
     return false unless self.all_cols_ok?
     return false unless self.all_squares_ok?
@@ -121,14 +136,14 @@ class Board
   end
 
   def all_rows_ok?
-    (0..9).each do |row|
+    (0...9).each do |row|
       return false unless self.pos_row_ok?(row)
     end
     return true
   end
 
   def all_cols_ok?
-    (0..9).each do |col|
+    (0...9).each do |col|
       return false unless self.pos_col_ok?(col)
     end
     return true
@@ -143,10 +158,4 @@ class Board
     end
     return true
   end
-
-  def solved?
-    return true if self.board_ok?
-    return false
-  end
-
 end
