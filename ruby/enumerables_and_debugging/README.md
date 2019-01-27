@@ -13,5 +13,3 @@ Note: Unlike in the prepwork, there are no specs to compare against. You'll have
 * Get comfortable reasoning about how enumerable methods work with arrays
 
 Start by opening the terminal and changing your directory to the Desktop using the cd command. Create a new directory titled W1D1 using the mkdir command and then open a new file in VS Code called enumerables.rb using the code command.
-
-
