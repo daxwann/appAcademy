@@ -1,12 +1,6 @@
-# Given two words of equal length as command-line arguments, build a chain of words 
+# Given two words of equal length as arguments, build a chain of words 
 # connecting the first to the second. Each word in the chain must be in the dictionary 
 # and every step along the chain changes exactly one letter from the previous word.
-
-# Again, your program should accept input as two command-line arguments. Your program 
-# should also allow a -d command-line switch followed by a dictionary file to use, but 
-# feel free to choose a sensible default for your system. The result should be a word 
-# chain starting with the first word and ending with the last printed to STDOUT, one 
-# word per line. Print an error message if a chain cannot be found.
 
 # Bonus points for finding the shortest chain and/or a small execution time.
 
