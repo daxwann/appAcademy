@@ -1,19 +1,23 @@
+require "byebug"
+
 # First, write a 'greedy' version called greedy_make_change:
 # Take as many of the biggest coin as possible and add them to your result.
 # Add to the result by recursively calling your method on the remaining 
 # amount, leaving out the biggest coin, until the remainder is zero.
 
 def greedy_make_change(amt, coins = [25, 10, 5, 1])
+    coins.sort! { |a, b| b <=> a}
     if amt == 0
         return []
     end
-    if amt < coins.first
+    first_coin = coins.first
+    if amt < first_coin
         return greedy_make_change(amt, coins[1..-1])
     end
     change = []
-    while amt >= coins.first
-        amt -= coins.first
-        change << coins.first
+    while amt >= first_coin
+        amt -= first_coin
+        change << first_coin
     end
     return change + greedy_make_change(amt, coins[1..-1])
 end
