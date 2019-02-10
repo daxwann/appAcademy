@@ -1,4 +1,35 @@
+module Searchable
+    def dfs(target_value=nil, &prc)
+        prc ||= Proc.new { |node| node.value == target_value }
+
+        return self if prc.call(self)
+
+        self.children.each do |child|
+            search_result = child.dfs(&prc)
+            return search_result unless search_result.nil?
+        end
+        nil
+    end 
+
+    def bfs(target_value=nil, &prc)
+        prc ||= Proc.new { |node| node.value == target_value }
+
+        queue = [self]
+        until queue.empty?
+            ele = queue.shift
+            return ele if prc.call(ele)
+            queue.concat(ele.children)
+        end
+        nil
+    end
+end
+
 class PolyTreeNode
+    include Searchable
+
+    attr_accessor :value
+    attr_reader :parent
+
 
     def initialize(value)
         @parent = nil
@@ -7,24 +38,17 @@ class PolyTreeNode
     end
 
     def children
-        @children
-    end
-
-    def parent
-        @parent
-    end
-
-    def value
-        @value
+        @children.dup
     end
 
     def parent=(parent)
-        unless @parent.nil?
-            @parent.children.reject!{|child| child == self}
+        unless self.parent.nil?
+            self.parent._children.delete(self)
         end
+
         @parent = parent
-        unless @parent.nil? || @parent.children.include?(self)
-            @parent.children << self
+        unless self.parent.nil? || self.parent._children.include?(self)
+            self.parent._children << self
         end
     end
 
@@ -45,22 +69,9 @@ class PolyTreeNode
         end
     end
 
-    def dfs(target_value)
-        return self if self.value == target_value
-        self.children.each do |child|
-            search_result = child.dfs(target_value)
-            return search_result unless search_result.nil?
-        end
-        nil
-    end
+    protected
 
-    def bfs(target_value)
-        queue = [self]
-        until queue.empty?
-            ele = queue.shift
-            return ele if ele.value == target_value
-            ele.children.each {|child| queue << child}
-        end
-        nil
-    end
+    def _children
+        @children
+    end    
 end
