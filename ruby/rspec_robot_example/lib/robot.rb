@@ -1,9 +1,12 @@
 class Robot
-    attr_reader :position, :items, :items_weight
+    attr_reader :position, :items, :items_weight, :health
+    attr_accessor :equipped_weapon
 
     def initialize
         @position = [0,0]
         @items = []
+        @health = 100
+        @equipped_weapon = nil
     end
 
     def move_left
@@ -35,6 +38,30 @@ class Robot
             sum + item.weight
         end
     end
+
+    def wound(amount)
+        if health - amount < 0
+            @health = 0
+        else
+            @health = health - amount
+        end
+    end
+
+    def heal(amount)
+        if health + amount > 100
+            @health = 100
+        else
+            @health = health + amount
+        end
+    end
+
+    def attack(robot_enemy)
+        if equipped_weapon.nil?
+            robot_enemy.wound(5)
+        else
+            equipped_weapon.hit(robot_enemy)
+        end
+    end
 end
 
 class Item
@@ -46,14 +73,37 @@ class Item
     end
 end
 
-class Bolts
+class Bolts < Item
+    def initialize
+        super("bolts", 25)
+    end
+
+    def feed(robot_injured)
+        robot_injured.heal(25)
+    end
 end
 
-class Weapon
+class Weapon < Item
+    attr_reader :damage
+
+    def initialize(name, weight, damage)
+        super(name, weight)
+        @damage = damage
+    end
+
+    def hit(robot_enemy)
+        robot_enemy.wound(damage)
+    end
 end
 
-class Laser
+class Laser < Weapon
+    def initialize
+        super("laser", 125, 25)
+    end
 end
 
-class PlasmaCannon
+class PlasmaCannon < Weapon
+    def initialize
+        super("plasma_cannon", 200, 55)
+    end
 end
