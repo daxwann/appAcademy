@@ -36,11 +36,14 @@ describe Dessert do
 
   describe "#mix!" do
     it "shuffles the ingredient array" do
-      dessert.add_ingredient('flour')
-      dessert.add_ingredient('sugar')
-      dessert.add_ingredient('baking soda')
-      dessert.add_ingredient('chocolate')
-      expect(dessert.mix!).to_not eq(['flour', 'sugar', 'baking soda', 'chocolate'])
+      ingredients = ['flour', 'sugar', 'baking soda', 'chocolate']
+
+      ingredients.each do |ingredient|
+        dessert.add_ingredient(ingredient)
+      end
+      
+      expect(dessert.ingredients).to eq(ingredients)
+      expect(dessert.mix!).to_not eq(ingredients)
     end
   end
 
@@ -56,13 +59,16 @@ describe Dessert do
   end
 
   describe "#serve" do
+    let(:chef) { double("chef", :titleize => 'Massimo Bottura the Skinny Chef')}
     it "contains the titleized version of the chef's name" do
-      expect(chef).to receive(:titleize)
-      dessert.serve
+      expect(dessert.serve).to include(chef.titleize)
     end
   end
 
   describe "#make_more" do
-    it "calls bake on the dessert's chef with the dessert passed in"
+    it "calls bake on the dessert's chef with the dessert passed in" do
+      expect(chef).to receive(:bake).with(dessert)
+      dessert.make_more
+    end
   end
 end
