@@ -1,5 +1,6 @@
 class Array
   def two_sum
+    return nil if self.empty? || self.count == 1
     hash = Hash.new
     pairs = []
     self.each_with_index do |ele, idx|
