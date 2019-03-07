@@ -19,40 +19,19 @@ describe 'Board' do
   end
 
   describe '#move' do
-    it ' 
+    it 'moves a disk from one column to another' do
+      board.move(0, 1)
+      expect(board.cols[0]).to eq([3, 2])
+      expect(board.cols[1]).to eq([1])
+      expect(board.cols[2]).to be_empty    
+    end
+
+    it 'throws error if a disk is moved from an empty column' do
+      expect {board.move(3, 1)}.to raise_error(ArgumentError)
+    end
+
+    it 'throws error if a larger disk is moved onto a smaller disk' do
+      expect {board.move(0, 1)}.to raise_error(ArgumentError)
+    end
   end
-
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-H

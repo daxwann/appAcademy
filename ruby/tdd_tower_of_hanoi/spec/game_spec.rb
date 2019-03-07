@@ -1,13 +1,19 @@
 require "game"
 
 describe 'Game' do
-  subject(:game) { Game.new }
+  let(:board) { instance_double("Board") }
+  let(:player) { instance_double("Player") }
 
   describe '#initialize' do
-    let(:board) { double("board") }
 
     it "starts with a new board" do
-      expect(game.stack).to_not eq(nil)
+      expect(Board).to receive(:new)
+      game = Game.new
+    end
+
+    it "starts with a new player" do
+      expect(Player).to receive(:new)
+      game = Game.new
     end
   end
 
