@@ -1,11 +1,7 @@
 require "game"
 
 describe 'Game' do
-  let(:board) { instance_double("Board") }
-  let(:player) { instance_double("Player") }
-
   describe '#initialize' do
-
     it "starts with a new board" do
       expect(Board).to receive(:new)
       game = Game.new
@@ -19,7 +15,6 @@ describe 'Game' do
 
   describe '#won?' do
     context 'all disks have been moved to third column' do
-      let(:board) { double(:cols => [[], [], [3, 2, 1]]) }
 
       it "returns true" do
         expect(game.won?).to eq(true)
@@ -27,7 +22,6 @@ describe 'Game' do
     end
 
     context 'not all disks have been moved to third column' do
-      let(:board) { double(:cols => [[], [3], [2, 1]]) }
 
       it "returns false" do
         expect(game.won?).to eq(false)
@@ -36,7 +30,6 @@ describe 'Game' do
   end
 
   describe '#play' do
-    let(:board) { double(:cols => [[], [], [3, 2, 1]]) }
 
     it "displays 'You did it!'" do
       expect(STDOUT).to_receive(:puts).with('You did it!')
