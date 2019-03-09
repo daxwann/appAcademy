@@ -15,8 +15,11 @@ describe 'Game' do
 
   describe '#won?(board)' do
     context 'all disks have been moved to third column' do
+<<<<<<< HEAD
       let(:bd) { double(:cols => [[], [], [3, 2, 1]]) }
       subject(:game) { Game.new }
+=======
+>>>>>>> 30ad4102e943081e31e9d6efb652b02fdd4b426d
 
       it "returns true" do
         expect(game.won?(bd)).to eq(true)
@@ -24,8 +27,11 @@ describe 'Game' do
     end
 
     context 'not all disks have been moved to third column' do
+<<<<<<< HEAD
       subject(:game) { Game.new }
       let(:bd) { double(:cols => [[3], [2], [1]]) }
+=======
+>>>>>>> 30ad4102e943081e31e9d6efb652b02fdd4b426d
 
       it "returns false" do
         expect(game.won?(bd)).to eq(false)
@@ -34,6 +40,7 @@ describe 'Game' do
   end
 
   describe '#play' do
+<<<<<<< HEAD
     def silence
         # Store the original stderr and stdout in order to restore them later
         @original_stderr = $stderr
@@ -64,6 +71,8 @@ describe 'Game' do
           game.play(bd, p1)
         end
       end
+=======
+>>>>>>> 30ad4102e943081e31e9d6efb652b02fdd4b426d
 
       it "calls Player#make_move" do
         expect(p1).to receive(:make_move).and_return([0, 1])
