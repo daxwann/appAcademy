@@ -20,7 +20,7 @@ describe 'Board' do
 
   describe '#move' do
     it 'moves a disk from one column to another' do
-      board.move(0, 1)
+      board.move([0, 1])
       expect(board.cols[0]).to eq([3, 2])
       expect(board.cols[1]).to eq([1])
       expect(board.cols[2]).to be_empty    
