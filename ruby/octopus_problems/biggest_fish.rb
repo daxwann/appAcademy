@@ -1,4 +1,5 @@
 require "rspec"
+require "byebug"
 
 class Octopus
   def sluggish_find(fishes)
@@ -16,26 +17,32 @@ class Octopus
       return fish if longest == true
     end 
   end
+
+  def dominant_find(fishes)
+    fish_len = Proc.new { |fish| fish.length }
+    sorted = fishes.merge_sort(fish_len)
+    return sorted.last
+  end
 end
 
 class Array
-  def merge_sort
+  def merge_sort(prc)
     len = self.count
     # base case
     return self if len <= 1
     # induction
     pivot = (len / 2).floor
-    left = merge_sort(self[0...pivot])
-    right = merge_sort(self[pivot..-1])
+    left = self[0...pivot].merge_sort(prc)
+    right = self[pivot..-1].merge_sort(prc)
     sorted = []
     until left.empty?
       if right.empty?
         sorted += left
         return sorted 
       end
-      if left.first < right.first
+      if prc.call(left.first) < prc.call(right.first)
         sorted << left.shift
-      elsif left.first > right.first
+      elsif prc.call(left.first) > prc.call(right.first)
         sorted << right.shift
       else
         sorted << left.shift
