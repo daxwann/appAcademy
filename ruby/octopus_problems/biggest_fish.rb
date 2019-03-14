@@ -2,11 +2,21 @@ require "rspec"
 require "byebug"
 
 class Octopus
-  attr_reader :tiles_array
+  attr_reader :tiles_array, :tiles_hash
 
   def initialize
     @tiles_array = ["up", "right-up", "right", "right-down",  
                     "down", "left-down", "left",  "left-up" ]
+    @tiles_hash = {
+      "up" => 0,
+      "right-up" => 1,
+      "right" => 2, 
+      "right-down" => 3,  
+      "down" => 4, 
+      "left-down" => 5, 
+      "left" => 6,
+      "left-up" => 7 
+    }
   end
 
   def sluggish_find(fishes)
@@ -48,6 +58,10 @@ class Octopus
       return idx if tile == direction
     end
     nil
+  end
+
+  def fast_dance(direction, tiles)
+    tiles[direction] 
   end
 end
 
@@ -111,6 +125,12 @@ describe Octopus do
   describe "#slow_dance" do
     it "Given a tile direction, returns the tile index" do
       expect(octopus.slow_dance("up", octopus.tiles_array)).to eq(0)
+    end
+  end
+
+  describe "#fast_dance" do
+    it "returns the tile index in O(1) time using dictionary ADT" do
+      expect(octopus.fast_dance("up", octopus.tiles_hash)).to eq(0)
     end
   end
 end
