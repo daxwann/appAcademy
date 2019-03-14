@@ -19,30 +19,30 @@ class Octopus
   end
 
   def dominant_find(fishes)
-    fish_len = Proc.new { |fish| fish.length }
-    sorted = fishes.merge_sort(fish_len)
-    return sorted.last
+    sorted = fishes.merge_sort { |x, y| y.length <=> x.length }
+    return sorted.first
   end
 end
 
 class Array
-  def merge_sort(prc)
+  def merge_sort(&prc)
     len = self.count
+    prc ||= lambda { |x, y| x <=> y }
     # base case
     return self if len <= 1
     # induction
     pivot = (len / 2).floor
-    left = self[0...pivot].merge_sort(prc)
-    right = self[pivot..-1].merge_sort(prc)
+    left = self[0...pivot].merge_sort(&prc)
+    right = self[pivot..-1].merge_sort(&prc)
     sorted = []
     until left.empty?
       if right.empty?
         sorted += left
         return sorted 
       end
-      if prc.call(left.first) < prc.call(right.first)
+      if prc.call(left.first, right.first) == -1
         sorted << left.shift
-      elsif prc.call(left.first) > prc.call(right.first)
+      elsif prc.call(left.first, right.first) == 1 
         sorted << right.shift
       else
         sorted << left.shift
