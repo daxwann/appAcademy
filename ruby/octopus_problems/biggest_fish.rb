@@ -76,6 +76,12 @@ class Array
     pivot = (len / 2).floor
     left = self[0...pivot].merge_sort(&prc)
     right = self[pivot..-1].merge_sort(&prc)
+
+    Array.merge(left, right, &prc)
+  end
+
+  private
+  def self.merge(left, right, &prc)
     sorted = []
     until left.empty?
       if right.empty?
