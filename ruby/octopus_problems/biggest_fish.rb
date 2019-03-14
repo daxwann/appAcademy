@@ -2,6 +2,13 @@ require "rspec"
 require "byebug"
 
 class Octopus
+  attr_reader :tiles_array
+
+  def initialize
+    @tiles_array = ["up", "right-up", "right", "right-down",  
+                    "down", "left-down", "left",  "left-up" ]
+  end
+
   def sluggish_find(fishes)
     fishes.each_with_index do |fish, idx|
       len = fish.length
@@ -22,11 +29,32 @@ class Octopus
     sorted = fishes.merge_sort { |x, y| y.length <=> x.length }
     return sorted.first
   end
+
+  def clever_find(fishes)
+    longest_len = 0
+    longest_idx = 0
+    fishes.each_with_index do |fish, idx|
+      len = fish.length
+      if len > longest_len
+        longest_len = len
+        longest_idx = idx
+      end
+    end
+    return fishes[longest_idx]
+  end
+
+  def slow_dance(direction, tiles)
+    tiles.each_with_index do |tile, idx|
+      return idx if tile == direction
+    end
+    nil
+  end
 end
 
 class Array
   def merge_sort(&prc)
     len = self.count
+    # default proc
     prc ||= lambda { |x, y| x <=> y }
     # base case
     return self if len <= 1
@@ -71,6 +99,18 @@ describe Octopus do
   describe "#dominant_find" do
     it "Find the longest fish in O(n log n) time" do
       expect(octopus.dominant_find(fishes)).to eq('fiiiissshhhhhh')
+    end
+  end
+
+  describe "#clever_find" do
+    it "Find the longest fish in O(n) time" do
+      expect(octopus.clever_find(fishes)).to eq('fiiiissshhhhhh')
+    end
+  end
+
+  describe "#slow_dance" do
+    it "Given a tile direction, returns the tile index" do
+      expect(octopus.slow_dance("up", octopus.tiles_array)).to eq(0)
     end
   end
 end
