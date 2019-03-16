@@ -1,5 +1,6 @@
 require "rspec"
 
+# O(n) time
 def my_min(arr)
   smallest = arr.first
   arr.each do |num|
@@ -8,6 +9,7 @@ def my_min(arr)
   return smallest
 end
 
+# O(n) time with O(1) memory
 def largest_contiguous_subsum(arr)
   largest = current = arr.first
  
