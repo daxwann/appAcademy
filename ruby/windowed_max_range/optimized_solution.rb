@@ -4,8 +4,67 @@ class MyQueue
   def initialize
     @store = []
   end
+
+  def peek
+    @store.first
+  end
+
+  def size
+    @store.count
+  end
+
+  def empty?
+    @store.empty?
+  end
+
+  def enqueue(val)
+    @store.push(val)
+  end
+
+  def dequeue
+    @store.shift
+  end
 end
 
+class MyStack
+  def initialize
+    @store = []
+  end
+  
+  def empty?
+    @store.empty?
+  end
+
+  def peek
+    @store.last
+  end
+
+  def size
+    @store.count
+  end
+
+  def pop
+    @store.pop
+  end
+
+  def push
+    @store.push
+  end    
+end
+
+class StackQueue
+  def initialize
+    @enqStack = Stack.new
+    @deqStack = Stack.new
+  end
+
+  def enqueue(val)
+    @enqStack.push(val)
+  end
+
+  def dequeue
+  end
+end
 # rspec
 
 describe '#windowed_max_range' do
