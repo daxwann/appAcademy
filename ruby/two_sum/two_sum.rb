@@ -1,5 +1,6 @@
 require "rspec"
 require "byebug"
+require "benchmark"
 
 # Brute force method. Time: O(n^2). Space: O(1)
 def bad_two_sum?(arr, target_sum) 
@@ -69,5 +70,29 @@ describe "two_sum?" do
     it { expect(two_sum?(arr, 6)).to eq(true) }
     it { expect(two_sum?(arr, 10)).to eq(false) }
   end
-
 end
+
+# benchmark
+arr1 = Array.new(50) { rand(1...100) }.uniq!
+arr2 = Array.new(500) { rand(1...1000) }.uniq!
+arr3 = Array.new(1000) { rand(1...2000) }.uniq!
+
+def benchmark_two_sum(count)
+  arr = Array.new(count) { rand(1...(count * 2)) }.uniq!
+  target_sum = rand(1...count)
+
+  Benchmark.bm do |x|
+    x.report { bad_two_sum?(arr, target_sum) }
+    x.report { okay_two_sum?(arr, target_sum) }
+    x.report { two_sum?(arr, target_sum) }
+  end
+end
+
+puts "Small array of numbers"
+benchmark_two_sum(500)
+
+puts "Medium array of numbers"
+benchmark_two_sum(1000)
+
+puts "Large array of numbers"
+benchmark_two_sum(5000)
