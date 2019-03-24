@@ -1,0 +1,47 @@
+div {
+  width: 200px;
+  min-height: 400px; 
+  padding: 50px;
+  border: 5px solid black;
+}
+
+#first-div {
+  background-color: #39cccc;
+}
+
+#second-div {
+  background-color: #ff4136;
+  box-sizing: border-box;
+}
+
+#third-div {
+  background-color: #9fde10;
+  min-height: 10px;
+}
+
+.image-1-container {
+  width: 200px;
+  height: 600px;
+  background-color: lightblue;
+}
+
+.image-1-container img {
+  width: 100%;
+}
+
+.image-2-container {
+  height: 600px;
+  display: inline-block;
+  width: auto;
+  min-width: 200px;
+  background-color: blue;
+}
+
+.image-2-container img {
+  display: block;
+}
+
+p {
+  background-color: #7fdbff;
+  width: 200px;
+}
