@@ -6,13 +6,22 @@ class HashSet
     @count = 0
   end
 
-  def insert(key)
+  def insert(ele)
+    return if self.include?(ele)
+    resize! if num_buckets == count
+    self[ele] << ele
+    @count += 1
   end
 
-  def include?(key)
+  def include?(ele)
+    self[ele].include?(ele)
   end
 
-  def remove(key)
+  def remove(ele)
+    self[ele].each_with_index do |el, i|
+      self[ele].slice!(i) if el == ele
+      @count -= 1
+    end
   end
 
   private
@@ -27,5 +36,11 @@ class HashSet
   end
 
   def resize!
+    old_set = @store.flatten
+    @store = Array.new(num_buckets * 2) { Array.new }
+    @count = 0
+    old_set.each do |ele|
+      insert(ele)
+    end
   end
 end
