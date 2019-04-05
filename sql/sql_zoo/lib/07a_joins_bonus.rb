@@ -135,6 +135,18 @@ def best_value
   # pence. Find the good value albums - show the title, the price and the number
   # of tracks.
   execute(<<-SQL)
+    SELECT
+      albums.title,
+      albums.price,
+      COUNT(tracks.song)
+    FROM
+      albums
+    JOIN
+      tracks ON albums.asin = tracks.album
+    GROUP BY
+      albums.title, albums.price
+    HAVING
+      albums.price < (0.5 * COUNT(tracks.song))
   SQL
 end
 
@@ -143,6 +155,20 @@ def top_track_counts
   # tracks. List the top 10 albums. Select both the album title and the track
   # count, and order by both track count and title (descending).
   execute(<<-SQL)
+    SELECT
+      albums.title,
+      COUNT(tracks.song)
+    FROM
+      albums
+    JOIN
+      tracks ON albums.asin = tracks.album
+    GROUP BY
+      albums.title
+    ORDER BY
+      COUNT(tracks.song) DESC,
+      albums.title DESC
+    LIMIT
+      10
   SQL
 end
 
