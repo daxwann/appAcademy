@@ -48,6 +48,16 @@ header > img {
   list-style: square inside;
 }
 
+.ingredients-list li {
+  display: inline-block;
+  margin: 15px 0 15px;
+}
+
+#directions + ol li {
+  display: inline-block;
+  margin: 15px 0 15px;
+}
+
 ol {
   list-style: upper-roman inside;
 }
@@ -57,11 +67,31 @@ ol {
   font-weight: bold;
 }
 
+.name,
+select,
+.review {
+  display: block;
+}
+
+.name input {
+  width: 300px;
+}
+
+select {
+  margin: 15px 0 15px;
+  width: 300px;
+}
+
+textarea {
+  display: block;
+  width: 300px;
+}
+
 input[type="radio"] {
     -webkit-appearance: none;
     width: 27px;
     height: 27px;
-    background-image: url(../assets/stars.png);
+    background-image: url('../assets/stars.png');
     vertical-align: bottom;
 }
 
@@ -69,8 +99,7 @@ input[type="radio"]:checked {
   background-position: 30px 30px;
 }
 
-
-input:last-child {
+input[type="submit"] {
     background: gold;
 }
 
