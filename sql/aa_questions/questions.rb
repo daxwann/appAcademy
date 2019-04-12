@@ -49,8 +49,20 @@ class User
     @fname = options['fname']
   end
 
-  def create
-    raise "#{self} is already in database" if @id
+  def save
+    if @id
+      QuestionsDatabase.instance.execute(<<-SQL, @lname, @fname, @id)
+        UPDATE
+          users
+        SET
+          lname = ?,
+          fname = ?
+        WHERE
+          id = ?
+      SQL
+
+      return
+    end
 
     QuestionsDatabase.instance.execute(<<-SQL, @lname, @fname)
       INSERT INTO
@@ -78,6 +90,18 @@ class User
     raise "#{self} is not in database" unless @id
 
     QuestionFollow.followed_questions_for_user_id(@id)
+  end
+
+  def liked_questions
+    raise "#{self} is not in database" unless @id
+
+    QuestionLike.liked_questions_for_user_id(@id)
+  end
+
+  def average_karma
+    raise "#{self} is not in database" unless @id
+
+    QuestionLike.avg_karma_for_user_id(@id)
   end
 end
 
@@ -116,6 +140,10 @@ class Question
     QuestionFollow.most_followed_questions(n)
   end
 
+  def self.most_followed(n)
+    QuestionLike.most_liked_questions(n)
+  end
+
   def initialize(options)
     @id = options['id']
     @title = options['title']
@@ -123,14 +151,29 @@ class Question
     @user_id = options['user_id']
   end
 
-  def create
-    raise "#{self} is already in database" if @id 
+  def save
+    if @id 
+      QuestionsDatabase.instance.execute(<<-SQL, @title, @body, @user_id, @id)
+        UPDATE
+          questions
+        SET
+          title = ?,
+          body = ?,
+          user_id = ?
+        WHERE
+          id = ?
+      SQL
+
+      return
+    end
+
     QuestionsDatabase.instance.execute(<<-SQL, @title, @body, @user_id)
       INSERT INTO
         questions (title, body, user_id)
       VALUES
         (?, ?, ?)
     SQL
+
     @id = QuestionsDatabase.instance.last_insert_row_id
   end
 
@@ -151,6 +194,18 @@ class Question
 
     QuestionFollow.followers_for_question_id(@id)
   end
+
+  def likers
+    raise "#{self} is not in database" unless @id
+
+    QuestionLike.likers_for_question_id(@id)
+  end
+
+  def num_likes
+    raise "#{self} is not in database" unless @id
+
+    QuestionLike.num_likes_for_question_id(@id)
+  end 
 end
 
 class Reply
@@ -217,8 +272,22 @@ class Reply
     @user_id = options['user_id']
   end
 
-  def create
-    raise "#{self} is already in database" if @id
+  def save
+    if @id
+      QuestionsDatabase.instance.execute(<<-SQL, @body, @reply_id, @question_id, @user_id, @id)
+        UPDATE
+          replies
+        SET
+          body = ?,
+          reply_id = ?,
+          question_id = ?,
+          user_id = ?
+        WHERE
+          id = ?  
+      SQL
+
+      return
+    end
 
     QuestionsDatabase.instance.execute(<<-SQL, @body, @reply_id, @question_id, @user_id)
       INSERT INTO
@@ -314,4 +383,91 @@ class QuestionFollow
   end
 end
 
-class 
+class QuestionLike
+  attr_accessor :user_id, :question_id
+
+  def self.likers_for_question_id(question_id)
+    data = QuestionsDatabase.instance.execute(<<-SQL, question_id)
+      SELECT
+        users.*
+      FROM
+        users
+      JOIN
+        question_likes ON users.id = question_likes.user_id
+      WHERE
+        question_likes.question_id = ?
+    SQL
+
+    data.map { |datum| User.new(datum) }
+  end
+
+  def self.num_likes_for_question_id(question_id)
+    data = QuestionsDatabase.instance.execute(<<-SQL, question_id)
+      SELECT
+        COUNT(question_likes.user_id) AS likes
+      FROM
+        questions
+      JOIN
+        question_likes ON questions.id = question_likes.question_id
+      WHERE
+        questions.id = ?
+      GROUP BY
+        questions.id
+    SQL
+
+    return data.first['likes'] unless data.empty?
+    nil
+  end
+
+  def self.liked_questions_for_user_id(user_id)
+    data = QuestionsDatabase.instance.execute(<<-SQL, user_id)
+      SELECT
+        questions.*
+      FROM
+        questions 
+      JOIN
+        question_likes ON questions.id = question_likes.question_id
+      WHERE  
+        question_likes.user_id = ?
+    SQL
+
+    data.map { |datum| Question.new(datum) }
+  end
+
+  def self.most_liked_questions(n)
+    data = QuestionsDatabase.instance.execute(<<-SQL, n)
+      SELECT
+        questions.*
+      FROM
+        questions
+      JOIN
+        question_likes ON questions.id = question_likes.question_id
+      GROUP BY
+        questions.id
+      ORDER BY
+        COUNT(question_likes.user_id) DESC
+      LIMIT
+       ?
+    SQL
+  end
+
+  def self.avg_karma_for_user_id(user_id)
+    data = QuestionsDatabase.instance.execute(<<-SQL, user_id)
+      SELECT
+        COUNT(question_likes.id) / (CAST(COUNT(DISTINCT questions.id) AS FLOAT)) AS avg_karma
+      FROM
+        users
+      LEFT JOIN
+        questions ON questions.user_id = users.id
+      LEFT JOIN
+        question_likes ON questions.id = question_likes.question_id
+      WHERE
+        users.id = ?
+      GROUP BY
+        users.id
+    SQL
+
+    return data.first['avg_karma'] unless data.empty?
+    nil
+  end
+end
