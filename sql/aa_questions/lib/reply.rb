@@ -1,8 +1,9 @@
 require_relative './questions_database'
 require_relative './user'
 require_relative './question'
+require_relative './model_base'
 
-class Reply
+class Reply < ModelBase
   attr_accessor :body, :reply_id, :question_id, :user_id
 
   def self.find_by_user_id(user_id)
@@ -33,64 +34,12 @@ class Reply
     nil
   end
 
-  def self.find_by_id(id)
-    data = QuestionsDatabase.instance.execute(<<-SQL, id) 
-      SELECT
-        *
-      FROM
-        replies
-      WHERE
-        id = ?
-    SQL
-
-    return Reply.new(data.first) unless data.nil? 
-    nil
-  end
-
-  def self.all
-    data = QuestionsDatabase.instance.execute(<<-SQL)
-      SELECT
-        *
-      FROM
-        replies
-    SQL
-
-    data.map { |datum| Reply.new(datum) }
-  end
-
   def initialize(options)
     @id = options['id']
     @body = options['body']
     @reply_id = options['reply_id']
     @question_id = options['question_id']
     @user_id = options['user_id']
-  end
-
-  def save
-    if @id
-      QuestionsDatabase.instance.execute(<<-SQL, @body, @reply_id, @question_id, @user_id, @id)
-        UPDATE
-          replies
-        SET
-          body = ?,
-          reply_id = ?,
-          question_id = ?,
-          user_id = ?
-        WHERE
-          id = ?  
-      SQL
-
-      return
-    end
-
-    QuestionsDatabase.instance.execute(<<-SQL, @body, @reply_id, @question_id, @user_id)
-      INSERT INTO
-        replies (body, reply_id, question_id, user_id)
-      VALUES
-        (?, ?, ?, ?)
-    SQL
-
-    @id = QuestionsDatabase.instance.last_insert_row_id
   end
 
   def author
