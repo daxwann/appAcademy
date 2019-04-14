@@ -2,29 +2,32 @@ require 'rspec'
 require_relative '../lib/user' 
 require_relative '../lib/questions_database'
 
-describe 'User' do
+describe User do
+
+  before(:each) { QuestionsDatabase.instance.reset! }
+  after(:each) { QuestionsDatabase.instance.reset! }
 
   describe '::find_by_id' do 
     it 'returns an instance of the user class' do
-      reply = User.find_by_id(1)
-      expect(reply).to be_kind_of(User)
+      reply = described_class.find_by_id(1)
+      expect(reply).to be_kind_of(described_class)
     end 
     
     it 'returns a user with the correct id' do 
-      reply = User.find_by_id(1)
+      reply = described_class.find_by_id(1)
       expect(reply.id).to eq(1)
     end 
   end
   describe '::find_by_name' do
     it 'returns an instance of the user class' do
-      reply = described_class.find_by_name("Kush", "Patel")
-      expect(reply).to be_kind_of(described_class)
+      reply = described_class.find_by_name("Wann", "Dax")
+      expect(reply.first).to be_kind_of(described_class)
     end 
     
     it 'returns the correct fname and lname' do 
-      reply = described_class.find_by_name("Ned", "Ruggeri")
-      expect(reply.fname).to eq("Ned")
-      expect(reply.lname).to eq("Ruggeri")
+      reply = described_class.find_by_name("Poehler", "Amy")
+      expect(reply.first.fname).to eq("Amy")
+      expect(reply.first.lname).to eq("Poehler")
     end
   end 
  
@@ -33,14 +36,14 @@ describe 'User' do
     
     it 'persists a new user to the database' do 
       user.save
-      expect(described_class.find_by_id(4)).to be_truthy 
+      expect(described_class.find_by_id(5)).to be_truthy 
     end 
     
     it "persists an updated user to the database" do 
       user.save
       user.fname = "updated_fname"
       user.save
-      expect(described_class.find_by_id(4).fname).to eq("updated_fname")
+      expect(described_class.find_by_id(5).fname).to eq("updated_fname")
     end 
   end 
  
