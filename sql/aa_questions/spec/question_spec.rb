@@ -3,8 +3,8 @@ require_relative '../lib/question'
 require_relative '../lib/questions_database' 
 
 describe Question do 
-  before(:each) { QuestionsDatabase.reset! }
-  after(:each) { QuestionsDatabase.reset! }
+  before(:each) { QuestionsDatabase.instance.reset! }
+  after(:each) { QuestionsDatabase.instance.reset! }
   
   describe '::find' do 
     it 'returns an instance of the question class' do 

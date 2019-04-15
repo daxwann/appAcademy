@@ -4,11 +4,11 @@ require_relative '../lib/questions_database'
 
 describe Reply do 
   
-  before(:each) { QuestionsDatabase.reset! }
-  after(:each) { QuestionsDatabase.reset! }
+  before(:each) { QuestionsDatabase.instance.reset! }
+  after(:each) { QuestionsDatabase.instance.reset! }
   
   describe '::find' do 
-    subject(:reply) { described_class.find(1) }
+    subject(:reply) { described_class.find_by_id(1) }
     
     it 'returns an instance of the reply class' do
       expect(reply).to be_kind_of(described_class)
@@ -16,11 +16,6 @@ describe Reply do
     
     it 'returns reply with the correct reply id' do 
       expect(reply.id).to eq(1)
-    end 
-    
-    it 'only looks for the first row in the replies table' do 
-      expect(QuestionsDatabase).to receive(:get_first_row).exactly(1).times.and_call_original
-      described_class.find(1)
     end 
   end 
   
@@ -64,17 +59,17 @@ describe Reply do
   end 
   
   describe '#author' do
-    subject(:reply) { described_class.find(1) }
+    subject(:reply) { described_class.find_by_id(1) }
     let(:user) { class_double("User").as_stubbed_const }
 
     it 'calls User::find_by_id' do 
-      expect(user).to receive(:find_by_id).with(1)
+      expect(user).to receive(:find_by_id).with(3)
       reply.author
     end 
   end  
   
   describe '#child_replies' do
-    subject(:reply) { described_class.find(2) }
+    subject(:reply) { described_class.find_by_id(1) }
 
     it 'calls Reply::find_by_author_id' do 
       expect(described_class).to receive(:find_by_parent_id).with(reply.id)
@@ -83,20 +78,20 @@ describe Reply do
   end 
   
   describe '#parent_reply' do
-    subject(:reply) { described_class.find(2) }
+    subject(:reply) { described_class.find_by_id(2) }
     
     it 'calls Reply::find' do
-      expect(described_class).to receive(:find).with(reply.parent_reply_id)
+      expect(described_class).to receive(:find_by_id).with(reply.parent_reply_id)
       reply.parent_reply 
     end 
   end 
   
   describe '#question' do 
-    subject(:reply) { described_class.find(1) }
+    subject(:reply) { described_class.find_by_id(1) }
     let(:question) { class_double("Question").as_stubbed_const }
     
     it 'calls Question::find' do
-      expect(question).to receive(:find).with(reply.question_id)
+      expect(question).to receive(:find_by_id).with(reply.question_id)
       reply.question
     end 
   end 
@@ -111,14 +106,14 @@ describe Reply do
     
     it 'persists a new reply to the database' do 
       reply.save
-      expect(described_class.find(3)).to be_truthy 
+      expect(described_class.find_by_id(3)).to be_truthy 
     end 
     
     it "persists an updated reply to the database" do 
       reply.save
       reply.body = "updated_body"
       reply.save
-      expect(described_class.find(3).body).to eq("updated_body")
+      expect(described_class.find_by_id(3).body).to eq("updated_body")
     end 
   end 
 end 

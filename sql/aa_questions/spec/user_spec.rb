@@ -18,6 +18,7 @@ describe User do
       expect(reply.id).to eq(1)
     end 
   end
+
   describe '::find_by_name' do
     it 'returns an instance of the user class' do
       reply = described_class.find_by_name("Wann", "Dax")
@@ -32,7 +33,7 @@ describe User do
   end 
  
   describe '#save' do 
-    let(:user) {described_class.new( {'fname' => "test_fname", 'lname' => "test_lname"}) }
+    let(:user) {described_class.new( {'lname' => "test_fname", 'fname' => "test_lname"}) }
     
     it 'persists a new user to the database' do 
       user.save
@@ -90,7 +91,7 @@ describe User do
   describe "#average_karma" do 
     it 'returns the correct average karma for a user' do 
       user = described_class.find_by_id(1)
-      expect(user.average_karma).to eq(1.0)
+      expect(user.average_karma).to eq(3.0)
     end
   end 
 end
