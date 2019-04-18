@@ -1,0 +1,24 @@
+html, body, header, img, nav, ul, li, aside, h1, h2, p, ol, section, form, 
+label, input, select, option, footer {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  background: transparent;
+  vertical-align: baseline;
+}
+
+body {
+  line-height: 1.5;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img {
+  display: block;
+  width: 100%;
+}
+
