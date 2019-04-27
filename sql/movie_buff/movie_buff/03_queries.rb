@@ -26,11 +26,24 @@ def costars(name)
   # appeared with.
   # Hint: use a subquery
 
+  Actor
+    .joins(:castings)
+    .where("castings.movie_id IN (?)",
+      Casting
+        .joins(:actor)
+        .where("actors.name = ?", name)
+        .pluck("castings.movie_id")
+    ).where.not("actors.name = ?", name)
+    .pluck("DISTINCT actors.name")
 end
 
 def actor_out_of_work
   # Find the number of actors in the database who have not appeared in a movie
 
+  Actor
+    .left_outer_joins(:castings)
+    .where("castings.id IS NULL")
+    .count
 end
 
 def starring(whazzername)
