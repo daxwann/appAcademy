@@ -110,3 +110,8 @@ label {
     display: block;
 }
 
+@media all and (max-width: 800px) {
+  .col {
+    width: 100%; 
+  }
+}
