@@ -70,13 +70,26 @@ nav {
     float: right;
 }
 
-nav ul li {
-    display: inline-block;
+.navbar {
+  display: block;
 }
 
-nav ul li a {
-    padding: 20px;
-    display: block;
+.navbar li {
+  display: inline-block;
+}
+
+.navbar li a {
+  padding: 20px;
+  display: block;
+}
+
+.hamburger-dropdown {
+  display: none;
+}
+
+.hamburger-dropdown li ul li a {
+  display: block;
+  padding: 10px;
 }
 
 body {
@@ -113,5 +126,33 @@ label {
 @media all and (max-width: 800px) {
   [class*="col-"][class$="-3"] {
     width: 100%; 
+  }
+
+  .navbar {
+    display: none;
+  }
+
+  .hamburger-dropdown {
+    display: block;
+  }
+
+  .hamburger-dropdown > li {
+    display: block;
+    background-image: url(images/hamburger.png); 
+    background-size: 50px 50px;
+    width: 50px;
+    height: 50px;
+    position: relative;
+  }
+
+  .hamburger-dropdown li ul {
+    display: none;
+  }
+
+  .hamburger-dropdown > li:hover > ul {
+    display: block;    
+    position: absolute;
+    background-color: lightblue; 
+    top: 40px;
   }
 }
