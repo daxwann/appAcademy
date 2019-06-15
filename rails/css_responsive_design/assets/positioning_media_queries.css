@@ -111,7 +111,7 @@ label {
 }
 
 @media all and (max-width: 800px) {
-  .col {
+  [class*="col-"][class$="-3"] {
     width: 100%; 
   }
 }
