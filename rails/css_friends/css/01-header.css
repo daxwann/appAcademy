@@ -3,6 +3,7 @@ body {
   font-family: Roboto, arial, sans-serif;
   font-weight: 400;
   font-size: 16px;
+  background-color: #eee;
 }
 
 .header {
@@ -15,4 +16,30 @@ body {
   justify-content: space-between;
   width: 900px;
   margin: 0 auto;
+  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
+}
+
+.header-logo {
+  padding: 10px 20px;
+  border-right: 1px solid #eee;
+}
+
+.header-logo:hover {
+  cursor: pointer;
+  background-color: #000;
+}
+
+.header-list {
+  display: flex;
+}
+
+.header-list a {
+  display: block;
+  padding: 10px 20px;
+  border-left: 1px solid #eee;
+}
+
+.header-list li:hover {
+  background-color: #000;
 }
