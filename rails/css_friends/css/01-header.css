@@ -9,6 +9,7 @@ body {
 .header {
   background-color: #f00;
   color: #fff;
+  border-bottom: 1px solid #aaa;
 }
 
 .header-nav {
