@@ -3,7 +3,7 @@
 const fizzBuzz = (array) => {
   const arr = array.filter(num => num % 3 == 0 || num % 5 == 0);
   return arr;
-}
+};
 
 console.log(fizzBuzz([1, 3, 5, 6, 7, 111])); // [3, 5, 6, 111]
 console.log(fizzBuzz([15, 25, 12, -12, 2])); // [15, 25, 12, -12]
