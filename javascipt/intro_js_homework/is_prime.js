@@ -1,7 +1,7 @@
 /*Define a function isPrime(number) that returns true if number is prime. Otherwise, false. Assume number is a positive integer.*/
 
 const isPrime = (num) => {
-  if (num == 1) return false;
+  if (num == 0 || num == 1) return false;
   if (num == 2) return true;
   if (num % 2 == 0) return false;
 
