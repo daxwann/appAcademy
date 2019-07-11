@@ -1,0 +1,28 @@
+.footer {
+  width: 900px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #aaa;
+  border-top: 0;
+  color: #aaa;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.copyright {
+  padding: 15px 10px;  
+}
+
+.footer-list {
+  display: flex;
+}
+
+.footer-list li {
+  padding: 15px 10px;
+}
+
+.footer-list li:hover {
+  color: #000;
+  cursor: pointer;
+}
