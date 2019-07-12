@@ -26,9 +26,12 @@ Array.prototype.myMap = function(callback) {
 /* Array#myReduce(callback[, initialValue]) - (like Ruby's Array#inject) receives a callback function, and optional initial value, returns an accumulator by applying the callback function to each element and the result of the last invocation of the callback (or initial value if supplied) */
 
 Array.prototype.myReduce = function(callback, initial = 0) {
-  
+  let self = this;
+  let accumulator = initial;
+
+  self.myEach((ele) => {
+    accumulator = callback(accumulator, ele); 
+  });
+
+  return accumulator;
 };
-
-
-
-
