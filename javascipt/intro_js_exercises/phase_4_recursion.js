@@ -69,3 +69,15 @@ const fibonacci = function(n) {
 /* deepDup(arr) - deep dup of an Array */
 
 
+const deepDup = function(arr) {
+  let dupped = [];
+  
+  arr.forEach((ele) => {
+    if (ele instanceof Array)
+      dupped.push(deepDup(ele));
+    else
+      dupped.push(ele);
+  });
+
+  return dupped;
+};
