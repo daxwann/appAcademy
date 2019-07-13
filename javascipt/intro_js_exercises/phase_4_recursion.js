@@ -50,3 +50,22 @@ const exp2 = function(base, exp) {
   else
     return base * (exp2(base, (exp - 1) / 2) ** 2);
 };
+
+/* fibonacci(n) - receives an integer, n, and returns the first n Fibonacci numbers */
+
+const fibonacci = function(n) {
+  if (n == 0)
+    return [];
+  else if (n == 1)
+    return [0];
+  else if (n == 2)
+    return [0, 1]
+  else { 
+    arr = fibonacci(n - 1);
+    return arr.concat(arr[n - 2] + arr[n - 3]);
+  }
+};
+ 
+/* deepDup(arr) - deep dup of an Array */
+
+
