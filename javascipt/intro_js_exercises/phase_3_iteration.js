@@ -20,3 +20,11 @@ Array.prototype.bubbleSort = function() {
 
   return self;
 };
+
+/* String#substrings - receives a string, returns an array of all substrings */
+
+String.prototype.substrings = function() {
+  let self = this;
+
+  return self.split(" ")
+};
