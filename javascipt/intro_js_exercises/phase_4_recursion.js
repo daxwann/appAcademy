@@ -68,7 +68,6 @@ const fibonacci = function(n) {
  
 /* deepDup(arr) - deep dup of an Array */
 
-
 const deepDup = function(arr) {
   let dupped = [];
   
@@ -80,4 +79,29 @@ const deepDup = function(arr) {
   });
 
   return dupped;
+};
+
+/* bsearch(arr, target) - receives a sorted array, returns the index of the target or -1 if not found */
+
+const bsearch = function(arr, target) {
+  let count = arr.length;
+  let fulcrum = Math.floor(count / 2);
+
+  if (target == arr[fulcrum])
+    return fulcrum;
+  else if (count == 1)
+    return -1;
+
+  left = bsearch(arr.slice(0, fulcrum), target); 
+  if (left != -1)
+    return left;
+
+  if (count == 2)
+    return -1;
+
+  right = bsearch(arr.slice(fulcrum + 1), target); 
+  if (right != -1)
+    return fulcrum + 1 + right;
+
+  return -1;
 };
