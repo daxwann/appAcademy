@@ -145,3 +145,24 @@ const mergeSort = function(arr) {
   return merge(left, right);
 };
 
+/* subsets(arr) - receives an array, returns an array containing all the subsets of the original array */
+
+const subsets = function(arr) {
+  if (arr.length == 0)
+    return [[]];
+
+  if (arr.length == 1)
+    return [arr];
+
+  let last = arr.pop();
+  let beforeLastSubsets = subsets(arr);
+  let newSubsets = beforeLastSubsets.slice(0);
+
+  beforeLastSubsets.forEach((subset) => {
+    let subsetCopy = subset.slice(0);
+    subsetCopy.push(last);
+    newSubsets.push(subsetCopy);
+  });
+
+  return newSubsets;
+};
