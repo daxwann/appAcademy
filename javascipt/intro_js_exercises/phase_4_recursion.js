@@ -92,16 +92,56 @@ const bsearch = function(arr, target) {
   else if (count == 1)
     return -1;
 
-  left = bsearch(arr.slice(0, fulcrum), target); 
+  let left = bsearch(arr.slice(0, fulcrum), target); 
   if (left != -1)
     return left;
 
   if (count == 2)
     return -1;
 
-  right = bsearch(arr.slice(fulcrum + 1), target); 
+  let right = bsearch(arr.slice(fulcrum + 1), target); 
   if (right != -1)
     return fulcrum + 1 + right;
 
   return -1;
 };
+
+/* mergesort(arr) - receives an array, returns a sorted copy of the array by implementing merge sort sorting algorithm */
+
+const merge = function(left, right) {
+  let merged = [];
+  
+  console.log(left + ', ' + right);
+  while (left.length != 0 && right.length != 0) {
+    if (left[0] < right[0])
+      merged.push(left.shift());
+    else if (left[0] == right[0]) {
+      merged.push(left.shift());
+      merged.push(right.shift());
+    } else {
+      merged.push(right.shift());
+    }
+  }
+
+  if (left.length != 0) {
+    merged = merged.concat(left);
+  } else if (right.length != 0) {
+    merged = merged.concat(right);
+  }
+
+  return merged;
+};
+
+const mergeSort = function(arr) {
+  let count = arr.length;
+  let fulcrum = Math.floor(count / 2);
+
+  if (count == 1)
+    return arr;
+
+  let left = mergeSort(arr.slice(0, fulcrum));
+  let right = mergeSort(arr.slice(fulcrum));
+
+  return merge(left, right);
+};
+
