@@ -147,15 +147,12 @@ const mergeSort = function(arr) {
 
 /* subsets(arr) - receives an array, returns an array containing all the subsets of the original array */
 
-const subsets = function(arr) {
+const subsetsUtil = function(arr) {
   if (arr.length == 0)
     return [[]];
 
-  if (arr.length == 1)
-    return [arr];
-
   let last = arr.pop();
-  let beforeLastSubsets = subsets(arr);
+  let beforeLastSubsets = subsetsUtil(arr);
   let newSubsets = beforeLastSubsets.slice(0);
 
   beforeLastSubsets.forEach((subset) => {
@@ -165,4 +162,17 @@ const subsets = function(arr) {
   });
 
   return newSubsets;
+};
+
+const subsets = function(arr) {
+  let subsetsArr = [];
+
+  if (arr.length == 0)
+    return [[]];
+  else
+    subsetsArr = subsetsUtil(arr);   
+
+  subsetsArr.shift();
+
+  return subsetsArr;
 };
