@@ -12,7 +12,7 @@ Array.prototype.uniq = function() {
   return uniqueArray;
 };
 
-/*Array#twoSum - returns an array of position pairs where the elements sum to zero*/
+/* Array#twoSum - returns an array of position pairs where the elements sum to zero. Time complexity: N^2 */
 
 Array.prototype.twoSum = function() {
   let twoSumArr = [];
@@ -26,6 +26,25 @@ Array.prototype.twoSum = function() {
   }
 
   return twoSumArr;
+};
+
+/* Array#twoSum2 with time complexity of N */
+
+Array.prototype.twoSum2 = function() {
+  let pairs = []
+  let self = this;
+  const indexHash = {};
+
+  this.forEach((num, idx) => {
+    if (indexHash[num * -1]) {
+      const newPairs = indexHash[num * -1].map((pairedIdx) => [pairedIdx, idx]);
+      pairs = pairs.concat(newPairs); 
+    }
+
+    indexHash[num] ? indexHash[el].push(idx) : indexHash[num] = [idx];
+  });
+
+  return pairs;
 };
 
 /* Array#transpose - where we have a two-dimensional array representing a matrix. returns the transpose */
