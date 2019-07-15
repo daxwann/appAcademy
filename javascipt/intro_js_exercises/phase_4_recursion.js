@@ -85,25 +85,20 @@ const deepDup = function(arr) {
 
 const bsearch = function(arr, target) {
   let count = arr.length;
-  let fulcrum = Math.floor(count / 2);
+  let probeIdx = Math.floor(count / 2);
+  let probe = arr[probeIdx];
 
-  if (target == arr[fulcrum])
-    return fulcrum;
-  else if (count == 1)
+  if (count === 0)
     return -1;
 
-  let left = bsearch(arr.slice(0, fulcrum), target); 
-  if (left != -1)
-    return left;
-
-  if (count == 2)
-    return -1;
-
-  let right = bsearch(arr.slice(fulcrum + 1), target); 
-  if (right != -1)
-    return fulcrum + 1 + right;
-
-  return -1;
+  if (target === probe)
+    return probeIdx;
+  else if (target < probe) {
+    return bsearch(arr.slice(0, probeIdx), target); 
+  } else {
+    let rightResult = bsearch(arr.slice(probeIdx + 1), target); 
+    return rightResult === -1 ? -1 : probeIdx + 1 + rightResult;
+  } 
 };
 
 /* mergesort(arr) - receives an array, returns a sorted copy of the array by implementing merge sort sorting algorithm */
