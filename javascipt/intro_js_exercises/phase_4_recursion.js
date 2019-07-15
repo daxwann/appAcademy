@@ -106,7 +106,6 @@ const bsearch = function(arr, target) {
 const merge = function(left, right) {
   let merged = [];
   
-  console.log(left + ', ' + right);
   while (left.length != 0 && right.length != 0) {
     if (left[0] < right[0])
       merged.push(left.shift());
