@@ -160,7 +160,15 @@ Board.prototype.placePiece = function (pos, color) {
  * Prints a string representation of the Board to the console.
  */
 Board.prototype.print = function () {
-
+  this.grid.forEach((row) => {
+    row.forEach((piece) => {
+      if (piece === 0)
+        console.log('0');
+      else
+        console.log(piece.toString());
+    };
+    console.log('\n');
+  };
 };
 
 /**
