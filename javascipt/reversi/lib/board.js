@@ -5,6 +5,22 @@ let Piece = require("./piece");
  * and two white pieces at [3, 3] and [4, 4]
  */
 function _makeGrid () {
+  let board = new Array();
+
+  for (let i = 0; i < 8; i++) {
+    let row = new Array(); 
+    for (let j = 0; j < 8; j++) {
+      row.push(0);
+    }
+    board.push(row);
+  }
+
+  board[4][3] = 'B';
+  board[3][4] = 'B';
+  board[3][3] = 'W';
+  board[4][4] = 'W';
+
+  return board;
 }
 
 /**
@@ -25,12 +41,25 @@ Board.DIRS = [
  * throwing an Error if the position is invalid.
  */
 Board.prototype.getPiece = function (pos) {
+  let [col, row] = pos;
+   
+  if (col < 0 || col > 7 || row < 0 || row > 7) {
+    console.log('Position invalid');
+    return null;
+  }
+
+  return this.grid[row][col];
 };
 
 /**
  * Checks if there are any valid moves for the given color.
  */
 Board.prototype.hasMove = function (color) {
+  for (let i = 0; i < 8; i++) {
+    if (this.grid[i].includes(0))
+      return true;
+  }
+  return false;
 };
 
 /**
