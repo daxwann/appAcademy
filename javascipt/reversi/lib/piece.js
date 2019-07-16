@@ -16,7 +16,7 @@ Piece.prototype.oppColor = function () {
  * Changes the piece's color to the opposite color.
  */
 Piece.prototype.flip = function () {
-  this.color = this.oppColor;
+  this.color = this.oppColor();
 };
 
 /**
