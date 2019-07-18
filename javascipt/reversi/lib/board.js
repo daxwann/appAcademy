@@ -136,9 +136,7 @@ Board.prototype.placePiece = function (pos, color) {
 
   this.grid[row][col] = new Piece(color);
   Board.DIRS.forEach((dir) => {
-    console.log(dir);
     positionsToFlip = positionsToFlip.concat(_positionsToFlip(this, pos, color, dir) || []);
-    console.log(positionsToFlip);
   });
   positionsToFlip.forEach((pos) => this.getPiece(pos).flip()); 
 };
