@@ -104,6 +104,10 @@ function _positionsToFlip (board, pos, color, dir, piecesToFlip) {
   let [dirY, dirX] = dir;
   let [row, col] = pos;
   let newPos = [row + dirY, col + dirX];
+  if (!piecesToFlip)
+    piecesToFlip = [];
+  else
+    piecesToFlip.push(pos);
   
   if (!board.isValidPos(newPos))
     return null;
@@ -113,10 +117,8 @@ function _positionsToFlip (board, pos, color, dir, piecesToFlip) {
     return null;
   else if (newPiece.color === color)  
     return piecesToFlip.length === 0 ? null : piecesToFlip;
-  else {
-    piecesToFlip.push(newPiece);
+  else 
     return _positionsToFlip(board, newPos, color, dir, piecesToFlip);
-  }
 }
 
 /**
@@ -130,15 +132,15 @@ Board.prototype.placePiece = function (pos, color) {
     throw new Error("Invalid move!"); 
   
   let [row, col] = pos;
-  let piecesToFlip = [];
+  let positionsToFlip = [];
 
   this.grid[row][col] = new Piece(color);
   Board.DIRS.forEach((dir) => {
     console.log(dir);
-    _positionsToFlip(this, pos, color, dir, piecesToFlip);
-    console.log(piecesToFlip);
+    positionsToFlip = positionsToFlip.concat(_positionsToFlip(this, pos, color, dir) || []);
+    console.log(positionsToFlip);
   });
-  piecesToFlip.forEach((piece) => piece.flip()); 
+  positionsToFlip.forEach((pos) => this.getPiece(pos).flip()); 
 };
 
 /**
@@ -174,9 +176,9 @@ Board.prototype.validMove = function (pos, color) {
     return false;
 
   for (let i = 0; i < Board.DIRS.length; i++) {
-    let piecesToFlip = [];
-    piecesToFlip = (_positionsToFlip(this, pos, color, Board.DIRS[i], piecesToFlip) || []); 
-    if (piecesToFlip.length > 0)
+    let positionsToFlip = [];
+    positionsToFlip = (_positionsToFlip(this, pos, color, Board.DIRS[i]) || []); 
+    if (positionsToFlip.length > 0)
       return true;
   }
 
