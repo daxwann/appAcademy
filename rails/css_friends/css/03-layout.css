@@ -12,14 +12,14 @@
 .content-sidebar {
   background-color: #fff;
   min-height: 200px;
-  width: 250px;
+  width: 200px;
   border-right: 1px solid #aaa;
-  padding: 5px;
+  padding: 20px;
 }
 
 .content-main {
   background-color: #fff;
   min-height: 200px;
   width: 650px;
-  padding: 5px;
+  padding: 20px;
 }
