@@ -13,7 +13,9 @@ class Clock {
     // 3. Call printTime.
     this.printTime();
     // 4. Schedule the tick at 1 second intervals.
-    
+    global.setInterval(() => {
+      this._tick();
+    }, 1000); 
   }
 
   _formatTime(timeInt) {
@@ -22,9 +24,9 @@ class Clock {
 
   printTime() {
     // Format the time in HH:MM:SS
-    const hour = _formatTime(this.time.hour); 
-    const minute = _formatTime(this.time.minute);
-    const second = _formatTime(this.time.second);
+    const hour = this._formatTime(this.time.hour); 
+    const minute = this._formatTime(this.time.minute);
+    const second = this._formatTime(this.time.second);
 
     // Use console.log to print it.
     console.log(`${hour}:${minute}:${second}`);
@@ -32,23 +34,23 @@ class Clock {
 
   _tick() {
     // 1. Increment the time by one second.
-    if (this.sec < 59) {
-      this.sec++;
+    if (this.time.second < 59) {
+      this.time.second++;
     } else {
-      this.sec = 0;
-      if (this.min < 59) {
-        this.min++;
+      this.time.second = 0;
+      if (this.time.minute < 59) {
+        this.time.minute++;
       } else {
-        this.min = 0;
-        if (this.hour < 23) {
-          this.hour++;
+        this.time.minute = 0;
+        if (this.time.hour < 23) {
+          this.time.hour++;
         } else {
-          this.hour = 0;
+          this.time.hour = 0;
         }
       }
     }
     // 2. Call printTime.
-    printTime();
+    this.printTime();
   }
 }
 
