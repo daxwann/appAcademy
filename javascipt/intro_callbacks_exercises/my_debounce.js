@@ -9,13 +9,15 @@ Function.prototype.myDebounce = function(interval) {
   const fn = this;
   let callTimer;
 
-  function startTimer() {
-    callTimer = global.setTimeout(fn, interval); 
+  function startFnCallTimer(...args) {
+    callTimer = global.setTimeout((...args) => {
+      fn(...args);
+    }, interval); 
   }
 
-  return () => {
+  return (...args) => {
     global.clearTimeout(callTimer);
-    startTimer();
+    startFnCallTimer(...args);
   };
 };
 

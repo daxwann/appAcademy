@@ -7,7 +7,7 @@ Function.prototype.myThrottle = function(interval) {
   const fn = this;
   let tooSoon = false;
  
-  return () => {
+  return (...args) => {
     if (tooSoon === true) {
       return;
     }
@@ -16,7 +16,7 @@ Function.prototype.myThrottle = function(interval) {
       tooSoon = false;
     }, interval);
 
-    fn(arguments);
+    fn(...args);
     tooSoon = true;
   };
 };
