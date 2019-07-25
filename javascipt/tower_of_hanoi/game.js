@@ -76,6 +76,10 @@ class Game {
       cb(startIdx, endIdx); 
     });
   }
+
+  completionCallback() {
+    console.log("You did it!!!");
+  }
 }
 
 let game = new Game;
