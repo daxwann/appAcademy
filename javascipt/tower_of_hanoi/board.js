@@ -10,7 +10,13 @@ class Board {
     let startTowerLength = this.towers[startIdx].length;
     let endTowerLength = this.towers[endIdx].length; 
 
+    // starting tower has to have at least one disk
     if (startTowerLength === 0) {
+      return false;
+    }
+
+    // starting and ending tower have to be side by side
+    if (Math.abs(startIdx - endIdx) !== 1) {
       return false;
     }
 
@@ -18,6 +24,7 @@ class Board {
       return true;
     }
 
+    // only smaller disks can be on top of bigger disks
     if (this.towers[startIdx][startTowerLength - 1].size < this.towers[endIdx][endTowerLength - 1].size) {
       return true;
     }
