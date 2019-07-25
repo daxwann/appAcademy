@@ -6,9 +6,36 @@ class Board {
     this.towers[0] = [new Disk(3), new Disk(2), new Disk(1)];
   }
 
+  isValidMove(startIdx, endIdx) {
+    let startTowerLength = this.towers[startIdx].length;
+    let endTowerLength = this.towers[endIdx].length; 
+
+    if (startTowerLength === 0) {
+      return false;
+    }
+
+    if (endTowerLength === 0) {
+      return true;
+    }
+
+    if (this.towers[startIdx][startTowerLength - 1].size < this.towers[endIdx][endTowerLength - 1].size) {
+      return true;
+    }
+
+    return false;
+  }
+
   moveDisk(startIdx, endIdx) {
     let disk = this.towers[startIdx].pop();     
     this.towers[endIdx].push(disk); 
+  }
+
+  isWon(){
+    if (this.towers[2].length === 3) {
+      return true;
+    }
+
+    return false;
   }
 
   display() {
@@ -37,4 +64,7 @@ bd.display();
 console.log("move disk");
 bd.moveDisk(0, 1);
 bd.display();
+console.log(bd.isValidMove(0, 1));
+console.log(bd.isValidMove(1, 2));
+
 */
