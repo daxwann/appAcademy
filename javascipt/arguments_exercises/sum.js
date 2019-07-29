@@ -21,4 +21,5 @@ function sum2(...nums) {
   return sum;
 }
 
+// test
 console.log(sum1(1, 2, 3));
