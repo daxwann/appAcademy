@@ -45,3 +45,9 @@ button,
 input[type="submit"] {
   cursor: pointer;
 }
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
