@@ -1,24 +1,23 @@
-// using rest operator
-Function.prototype.myBind = function(context, ...bindArgs) {
+// using arguments object
+Function.prototype.myBind1 = function() {
   let fn = this;
+  let bindArgs = Array.from(arguments);
+  let context = bindArgs[0] || fn.caller;
 
-  if (bindArgs.length == 0) {
-    return (...callArgs) => {
-      fn.apply(context, callArgs);
-    };
-  }
+  return function() {
+    const callArgs = Array.from(arguments);
+    fn.apply(context, bindArgs.slice(1).concat(callArgs));
+  };
+}
 
-  if (bindArgs.length == 1) {
-    return (...callArgs) => {
-      fn.apply(context, [bindArgs[0]].concat(callArgs));
-    };
-  }
+// using rest operator
+Function.prototype.myBind2 = function(ctx, ...bindArgs) {
+  let fn = this;
+  let context = ctx || fn.caller;
 
-  if (bindArgs.length > 1) {
-    return () => {
-      fn.apply(context, bindArgs);
-    };
-  }
+  return (...callArgs) => {
+    fn.apply(context, bindArgs.concat(callArgs));
+  };
 }
 
 // test
@@ -47,22 +46,22 @@ markov.says("meow", "Ned");
 // true
 
 // bind time args are "meow" and "Kush", no call time args
-markov.says.myBind(pavlov, "meow", "Kush")();
+markov.says.myBind1(pavlov, "meow", "Kush")();
 // Pavlov says meow to Kush!
 // true
 
 // no bind time args (other than context), call time args are "meow" and "a tree"
-markov.says.myBind(pavlov)("meow", "a tree");
+markov.says.myBind1(pavlov)("meow", "a tree");
 // Pavlov says meow to a tree!
 // true
 
 // bind time arg is "meow", call time arg is "Markov"
-markov.says.myBind(pavlov, "meow")("Markov");
+markov.says.myBind1(pavlov, "meow")("Markov");
 // Pavlov says meow to Markov!
 // true
 
 // no bind time args (other than context), call time args are "meow" and "me"
-const notMarkovSays = markov.says.myBind(pavlov);
+const notMarkovSays = markov.says.myBind1(pavlov);
 notMarkovSays("meow", "me");
 // Pavlov says meow to me!
 // true
