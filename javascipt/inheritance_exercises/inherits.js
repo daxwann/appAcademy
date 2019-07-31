@@ -5,10 +5,16 @@
 
 Function.prototype.inherits = function(parentClass) {
   let childClass = this;
+
+  /*
   let Surrogate = function(){};
 
   Surrogate.prototype = parentClass.prototype;
   childClass.prototype = new Surrogate();
+  childClass.prototype.constructor = childClass;
+  */
+
+  childClass.prototype = Object.create(parentClass.prototype);
   childClass.prototype.constructor = childClass;
 };
 
