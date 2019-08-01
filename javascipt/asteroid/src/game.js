@@ -13,7 +13,6 @@ Game.prototype.addAsteroids = function() {
   for (let i = 0; i < Game.NUM_ASTEROIDS; i++) {
     let ast = new Asteroid( { pos: this.randomPosition(), game: this} );
     this.asteroids.push(ast);
-    console.log(`added new ast in ${ast.pos}`);
   }
 }
 
@@ -27,7 +26,6 @@ Game.prototype.draw = function(ctx) {
   ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
   this.asteroids.forEach((ast) => {
     ast.draw(ctx);
-    console.log(`drew asteroid at position ${ast.pos}`);
   });
 };
 
@@ -57,5 +55,34 @@ Game.prototype.wrap = function(pos) {
 
   return [x, y];
 }
+
+Game.prototype.checkCollision = function() {
+  this.asteroids.forEach((ast1, idx1) => {
+    this.asteroids.forEach((ast2, idx2) => {
+      if (idx2 <= idx1) {
+        return;
+      }
+
+      if (ast1 === ast2) {
+        return;
+      }
+
+      if (ast1.isCollidedWith(ast2)) {
+        ast1.collideWith(ast2);
+      }
+    });
+  });
+};
+
+Game.prototype.remove = function(asteroid) {
+  this.asteroids = this.asteroids.filter((ast) => {
+      return ast !== asteroid;
+  });
+};
+
+Game.prototype.step = function() {
+  this.moveObjects();
+  this.checkCollision();
+};
 
 module.exports = Game;
