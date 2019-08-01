@@ -2,7 +2,7 @@ const Utils = require("./utils.js");
 const MovingObject = require("./moving_object.js");
 
 function Asteroid(option) {
-  MovingObject.call(this, { pos: option.pos, vel: Utils.randomVec(20), radius: Asteroid.RADIUS, color: Asteroid.COLOR });
+  MovingObject.call(this, { pos: option.pos, vel: Utils.randomVec(1), radius: Asteroid.RADIUS, color: Asteroid.COLOR, game: option.game });
 }
 
 Asteroid.COLOR = "#8BE371";
