@@ -14,4 +14,8 @@ Ship.prototype.relocate = function(newPos) {
   this.pos = newPos;
 };
 
+Ship.prototype.power = function(impulse) {
+  this.vel = [this.vel[0] + impulse[0], this.vel[1] + impulse[1]];
+};
+
 module.exports = Ship;

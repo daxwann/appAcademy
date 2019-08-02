@@ -21,4 +21,8 @@ GameView.prototype.setContext = function() {
   return ctx;
 };
 
+GameView.prototype.bindKeyHandlers = function() {
+
+};
+
 module.exports = GameView;
