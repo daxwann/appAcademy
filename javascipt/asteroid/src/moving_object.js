@@ -32,11 +32,4 @@ MovingObject.prototype.isCollidedWith = function(otherObj) {
   return false;
 }
 
-MovingObject.prototype.collideWith = function(otherObj) {
-  this.game.remove(this);
-  console.log(`removed ${this}`);
-  this.game.remove(otherObj);
-  console.log(`removed ${otherObj}`);
-}
-
 module.exports = MovingObject;
