@@ -1,5 +1,6 @@
 const Asteroid = require("./asteroid.js");
 const Ship = require("./ship.js");
+const Bullet = require("./bullet.js");
 
 function Game() {
   this.asteroids = [];
@@ -71,6 +72,15 @@ Game.prototype.wrap = function(pos) {
   return [x, y];
 }
 
+Game.prototype.isOutOfBound = function(pos) {
+  let [x, y] = pos;
+  if (x > Game.DIM_X || x < 0 || y > Game.DIM_Y || y < 0) {
+    return true;
+  }
+
+  return false;
+};
+
 Game.prototype.checkCollision = function() {
   let allObj = this.allObjects();
   this.asteroids.forEach((ast, idx1) => {
@@ -90,10 +100,16 @@ Game.prototype.checkCollision = function() {
   });
 };
 
-Game.prototype.remove = function(asteroid) {
-  this.asteroids = this.asteroids.filter((ast) => {
-      return ast !== asteroid;
-  });
+Game.prototype.remove = function(obj) {
+  if (obj instanceof Asteroid) {
+    this.asteroids = this.asteroids.filter((ast) => {
+        return ast !== obj;
+    });
+  } else if (obj instanceof Bullet) {
+    this.bullets = this.bullets.filter((bullet) => {
+      return bullet !== obj;
+    });
+  }
 };
 
 Game.prototype.step = function() {

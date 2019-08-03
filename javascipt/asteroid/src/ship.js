@@ -1,5 +1,7 @@
 const MovingObject = require("./moving_object.js");
 const Utils = require("./utils.js");
+const Game = require("./game.js");
+const Bullet = require("./bullet.js");
 
 function Ship(option) {
   MovingObject.call(this, {pos: option.pos, vel: [0, 0], radius: Ship.RADIUS, color: Ship.COLOR, game: option.game});
@@ -43,7 +45,8 @@ Ship.prototype.turnRight = function() {
 };
 
 Ship.prototype.fire = function() {
-  
+  let bullet = new Bullet({ pos: this.pos, vel: Utils.controlledVec(this.dir, 50), game: this.game });
+  this.game.bullets.push(bullet);
 }
 
 module.exports = Ship;

@@ -1,6 +1,7 @@
 const Game = require("./game.js");
 
 function MovingObject(options) {
+  console.log(options);
   this.pos = options.pos;
   this.vel = options.vel;
   this.radius = options.radius;
