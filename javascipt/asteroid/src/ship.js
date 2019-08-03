@@ -42,4 +42,8 @@ Ship.prototype.turnRight = function() {
   console.log(this.dir);
 };
 
+Ship.prototype.fire = function() {
+  
+}
+
 module.exports = Ship;

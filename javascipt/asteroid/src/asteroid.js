@@ -4,7 +4,7 @@ const Ship = require("./ship.js");
 const Game = require("./game.js");
 
 function Asteroid(option) {
-  MovingObject.call(this, { pos: option.pos, vel: Utils.randomVec(1), radius: Asteroid.RADIUS, color: Asteroid.COLOR, game: option.game });
+  MovingObject.call(this, { pos: option.pos, vel: Utils.controlledVec(Math.random(), 1), radius: Asteroid.RADIUS, color: Asteroid.COLOR, game: option.game });
 }
 
 Asteroid.COLOR = "#8BE371";

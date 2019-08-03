@@ -6,11 +6,6 @@ const Utils = {
     childClass.prototype.constructor = childClass;
   },
 
-  randomVec: function(length) {
-    const deg = 2 * Math.PI * Math.random();
-    return Utils.scale([Math.sin(deg), Math.cos(deg)], length);
-  },
-
   controlledVec: function(dir, speed) {
     const deg = 2 * Math.PI * dir;
     return Utils.scale([Math.sin(deg), Math.cos(deg)], speed);

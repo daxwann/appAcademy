@@ -5,6 +5,7 @@ function Game() {
   this.asteroids = [];
   this.addAsteroids();
   this.ship = new Ship({pos: this.centerPosition(), game: this});
+  this.bullets = [];
 }
 
 Game.DIM_X = window.innerWidth;
@@ -19,7 +20,7 @@ Game.prototype.addAsteroids = function() {
 }
 
 Game.prototype.allObjects = function() {
-  return this.asteroids.concat([this.ship]);
+  return this.asteroids.concat([this.ship]).concat(this.bullets);
 };
 
 Game.prototype.randomPosition = function() {
