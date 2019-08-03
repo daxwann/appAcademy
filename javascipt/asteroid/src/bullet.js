@@ -12,16 +12,6 @@ Utils.inherits(Bullet, MovingObject);
 Bullet.RADIUS = 5;
 Bullet.COLOR = "#FF2200";
 
-Bullet.prototype.move = function() {
-  let [x, y] = this.pos;
-  let [dx, dy] = this.vel;
-  let newPos = [x + dx, y + dy];
-
-  if (this.game.isOutOfBound(newPos)) {
-    this.game.remove(this);
-  } else {
-    this.pos = [x + dx, y + dy];
-  }
-};
+Bullet.prototype.isWrappable = () => false;
 
 module.exports = Bullet;
