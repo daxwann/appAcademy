@@ -37,7 +37,6 @@ Game.prototype.centerPosition = function() {
 Game.prototype.draw = function(ctx) {
   ctx.clearRect(0, 0, Game.DIM_X, Game.DIM_Y);
   let allObj = this.allObjects();
-  console.log(allObj);
   allObj.forEach((obj) => {
     obj.draw(ctx);
   });
@@ -45,7 +44,6 @@ Game.prototype.draw = function(ctx) {
 
 Game.prototype.moveObjects = function() {
   let allObj = this.allObjects();
-  console.log(allObj);
   allObj.forEach((obj) => {
     obj.move();
   });

@@ -11,6 +11,11 @@ const Utils = {
     return Utils.scale([Math.sin(deg), Math.cos(deg)], length);
   },
 
+  controlledVec: function(dir, speed) {
+    const deg = 2 * Math.PI * dir;
+    return Utils.scale([Math.sin(deg), Math.cos(deg)], speed);
+  },
+
   scale: function(vec, mag) {
     return [vec[0] * mag, vec[1] * mag];
   }

@@ -6,6 +6,7 @@ function GameView() {
 }
 
 GameView.prototype.start = function() {
+  this.bindKeyHandlers();
   setInterval(() => {
     this.game.step();
     this.game.draw(this.ctx);
@@ -22,7 +23,21 @@ GameView.prototype.setContext = function() {
 };
 
 GameView.prototype.bindKeyHandlers = function() {
+  key('w', () => {
+    this.game.ship.accelerate();
+  });
 
+  key('s', () => {
+    this.game.ship.deccelerate();
+  });
+
+  key('a', () => {
+    this.game.ship.turnLeft();
+  });
+
+  key('d', () => {
+    this.game.ship.turnRight();
+  });
 };
 
 module.exports = GameView;
