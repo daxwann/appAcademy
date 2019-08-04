@@ -1,0 +1,14 @@
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.js"></script>
+
+<input type="text" id="cool-input">
+
+<script>
+  window.setInterval( () => {
+    const $coolInput = $("#cool-input");
+
+    if ($coolInput.val() == "racecars") {
+      // Reset the input on them!
+      $coolInput.val("lasers");
+    }
+  }, 100);
+</script>
