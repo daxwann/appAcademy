@@ -3,7 +3,6 @@ const Utils = require("./utils.js");
 const Ship = require("./ship.js");
 
 function Bullet(options) {
-  console.log(options);
   MovingObject.call(this, {pos: options.pos, vel: options.vel, radius: Bullet.RADIUS, color: Bullet.COLOR, game: options.game});
 }
 

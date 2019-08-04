@@ -35,7 +35,6 @@ Ship.prototype.deccelerate = function() {
 Ship.prototype.turnLeft = function() {
   this.dir = Math.round(((1 + (this.dir + 0.01) % 1) % 1) * 100) / 100;
   this.vel = Utils.controlledVec(this.dir, this.speed);
-  console.log(this.dir);
 };
 
 Ship.prototype.turnRight = function() {

@@ -44,10 +44,10 @@ Game.prototype.draw = function(ctx) {
   });
 };
 
-Game.prototype.moveObjects = function() {
+Game.prototype.moveObjects = function(timeDelta) {
   let allObj = this.allObjects();
   allObj.forEach((obj) => {
-    obj.move();
+    obj.move(timeDelta);
   });
 };
 
@@ -110,11 +110,6 @@ Game.prototype.remove = function(obj) {
       return bullet !== obj;
     });
   }
-};
-
-Game.prototype.step = function() {
-  this.moveObjects();
-  this.checkCollision();
 };
 
 module.exports = Game;

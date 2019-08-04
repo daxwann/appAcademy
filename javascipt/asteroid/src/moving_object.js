@@ -1,7 +1,6 @@
 const Game = require("./game.js");
 
 function MovingObject(options) {
-  console.log(options);
   this.pos = options.pos;
   this.vel = options.vel;
   this.radius = options.radius;
@@ -16,13 +15,14 @@ MovingObject.prototype.draw = function(ctx) {
   ctx.fill();
 };
 
-MovingObject.prototype.move = function() {
+MovingObject.prototype.move = function(timeDelta) {
+  timeDelta = timeDelta || 1;
   let [x, y] = this.pos;
   let [dx, dy] = this.vel;
-  let newPos = [x + dx, y + dy];
+  let newPos = [x + dx * (timeDelta / 20), y + dy * (timeDelta / 20)];
 
   if (this.isWrappable()) {
-  this.pos = this.game.wrap([x + dx, y + dy]);
+    this.pos = this.game.wrap(newPos);
   } else if (this.game.isOutOfBound(newPos)) {
     this.game.remove(this);
   } else {

@@ -3,14 +3,12 @@ const Game = require("./game.js");
 function GameView() {
   this.game = new Game();
   this.ctx = this.setContext();
+  this.lastTime = 0;
 }
 
 GameView.prototype.start = function() {
   this.bindKeyHandlers();
-  setInterval(() => {
-    this.game.step();
-    this.game.draw(this.ctx);
-  }, 20);
+  window.requestAnimationFrame(this.animate.bind(this));
 }
 
 GameView.prototype.setContext = function() {
@@ -42,6 +40,15 @@ GameView.prototype.bindKeyHandlers = function() {
   key('k', () => {
     this.game.ship.fire();
   })
+};
+
+GameView.prototype.animate = function(timeStamp) {
+  let timeDelta = timeStamp - this.lastTime;
+  this.game.moveObjects(timeDelta);
+  this.game.checkCollision();
+  this.game.draw(this.ctx);
+  this.lastTime = timeStamp;
+  window.requestAnimationFrame(this.animate.bind(this));
 };
 
 module.exports = GameView;
