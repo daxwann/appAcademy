@@ -48,6 +48,8 @@ View.prototype.exercise4 = function () {
   //Result: Your name appears in every other square.
 
   //your code here!
+  const $name = $('<p class="name">Dax</p>');
+  $('li.square:nth-of-type(2n)').append($name);
 };
 
 View.prototype.exercise5 = function () {
@@ -59,6 +61,10 @@ View.prototype.exercise5 = function () {
   //  'data-pos' of every square
 
   //your code here!
+  $('#easel').on('click', 'li.square', (e) => {
+    const targetSquare = $(e.currentTarget);
+    alert(targetSquare.data("pos"));
+  })
 };
 
 View.prototype.exercise6 = function () {
@@ -69,6 +75,12 @@ View.prototype.exercise6 = function () {
   //hint: use window._randomColorString() (defined at top) to get a random color!
 
   //your code here!
+  const $squares = $("li.square");
+  $squares.each((index) => {
+    let $square = $($squares[index]);
+    $square.off("mouseenter", this._displayRandomColor);
+    $square.css("background-color", window._randomColorString());
+  });
 };
 
 View.prototype.exercise7 = function(){
@@ -79,6 +91,11 @@ View.prototype.exercise7 = function(){
   //rainbow.
 
   //your code here!
+  const $easel = $("#easel");
+  $easel.on("mouseenter", "li.square", (e) => {
+    const $targetSquare = $(e.currentTarget);
+    console.log($targetSquare.css("background-color"));
+  });
 };
 
 
@@ -104,13 +121,15 @@ View.prototype.addRow = function() {
   const $row = $("<ul>").addClass("row").addClass("group");
   for(let colIdx = 0; colIdx < 20; colIdx++) {
     const $square = $("<li>").addClass("square").attr("data-pos", [rowIdx, colIdx]);
-    $square.on("mouseenter", (e) => {
-      const $square = $(e.currentTarget);
-      $square.css("background-color", window._randomColorString());
-    });
+    $square.on("mouseenter", this._displayRandomColor);
     $row.append($square);
   }
   this.$el.append($row);
+};
+
+View.prototype._displayRandomColor = function(e) {
+  const $square = $(e.currentTarget);
+  $square.css("background-color", window._randomColorString());
 };
 
 module.exports = View;
