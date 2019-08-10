@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, scale=1">
-  <title>App Academy Friends | PHASE 8: Thumbs</title>
+  <title>App Academy Friends | PHASE 9: Forms</title>
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/00-reset.css" type="text/css">
   <link rel="stylesheet" href="css/01-header.css" type="text/css">
@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="css/06-sidebar.css" type="text/css">
   <link rel="stylesheet" href="css/07-online.css" type="text/css">
   <link rel="stylesheet" href="css/08-thumbs.css" type="text/css">
+  <link rel="stylesheet" href="css/09-forms.css" type="text/css">
 </head>
 <body>
   <header class="header">
@@ -120,6 +121,28 @@
         </div>
       </section>
       <section class="content-main">
+        <form class="form" action="#" method="POST">
+          <div class="thumb" data-title="Sennacy">
+            <a href="#">
+              <img src="./images/cat.jpg" alt="profile picture">
+            </a>
+          </div>
+          <fieldset class="form-fieldset">
+            <div class="input">
+              <label for="post-title">Post Title</label>
+              <input type="text" id="post-title" name="post[title]">
+            </div>
+            <div class="input">
+              <label for="post-body">Post Body</label>
+              <textarea id="post-body" name="post[body]" rows="5"></textarea>
+            </div>
+            <div class="submit">
+              <input class="btn btn-submit" type="submit" value="Post To Wall">
+              <span> or </span>
+              <a class="cancel">Cancel</a>
+            </div>
+          </fieldset>
+        </form>
       </section>
     </div>
   </main>

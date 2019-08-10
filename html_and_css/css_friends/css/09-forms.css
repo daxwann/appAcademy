@@ -1,0 +1,8 @@
+.content-main .thumb {
+  width: 58px;
+  float: left;
+}
+
+.content-main .form {
+  width: calc(100% - 58px);
+}
