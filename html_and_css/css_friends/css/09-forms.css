@@ -34,6 +34,10 @@
   font-size: 18px;
 }
 
+.input > input[type="text"]:focus, textarea:focus {
+  border: 1px solid #0c0;
+}
+
 .btn-submit[type="submit"] {
   position: relative;
   background-color: #0c0;
@@ -43,8 +47,11 @@
 }
 
 .btn-submit[type="submit"]:hover {
-  box-shadow: none;
   background-color: #0a0;
+}
+
+.btn-submit[type="submit"]:active {
+  box-shadow: none;
   top: 1px;
 }
 
