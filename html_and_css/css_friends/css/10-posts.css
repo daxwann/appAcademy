@@ -1,0 +1,40 @@
+.post {
+  margin: 20px 0px;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+}
+
+.post-content {
+  float: left;
+  margin-left: 20px;
+  width: calc(100% - 60px - 20px);
+}
+
+.post-title {
+  margin: 0;
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.post-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.post-info {
+  font-size: 14px;
+  color: #aaa;
+}
+
+.post-info span::after {
+  content: " \2022";
+}
+
+.post-info span:last-of-type::after {
+  content: none;
+}
+
+.post-actions a {
+  margin-left: 5px;
+}

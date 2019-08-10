@@ -1,10 +1,10 @@
 .content-main .thumb {
-  width: 58px;
+  width: 60px;
   float: left;
 }
 
 .content-main .form-fieldset {
-  width: calc(100% - 58px - 20px);
+  width: calc(100% - 60px - 20px);
   float: left;
   background-color: #eee;
   margin-left: 20px;
