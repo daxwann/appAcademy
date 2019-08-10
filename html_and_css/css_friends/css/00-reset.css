@@ -18,6 +18,10 @@ span, article, footer, time, small {
   background: transparent;
 }
 
+body {
+  box-sizing: border-box;
+}
+
 ul {
   list-style: none;
 }
