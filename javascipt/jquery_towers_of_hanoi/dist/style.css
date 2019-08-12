@@ -1,0 +1,54 @@
+/* reset */
+
+html, body, header, nav, h1, a,
+ul, li, strong, main, button, i,
+section, img, div, h2, p, form,
+fieldset, label, input, textarea,
+span, article, footer, time, small {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  text-decoration: inherit;
+  vertical-align: inherit;
+  box-sizing: inherit;
+  background: transparent;
+}
+
+body {
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+/* game style */
+.hanoi {
+  width: 600px;
+  background: #ccc;
+  padding: 50px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+.tower {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 10px;
+  height: 200px;
+  background-color: #000;
+}
+
+.disk {
+  width: 50px;
+  height: 10px;
+  border-radius: 30%;
+  background-color: #0CE80C;
+}
