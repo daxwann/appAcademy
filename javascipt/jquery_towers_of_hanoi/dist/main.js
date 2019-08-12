@@ -126,7 +126,7 @@ eval("const board = __webpack_require__(/*! ./board.js */ \"./src/board.js\");\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("class HanoiView {\n  constructor(game, $el) {\n    this.game = game;\n    this.$rootDom = $el;\n    this.setupTowers();\n  }\n\n  setupTowers() {\n    for (let i = 0; i < 3; i++) {\n      const $tower = $(`<ul class=\"tower\" data-pos=\"${i}\"></ul>`);\n\n      if (i === 0) {\n        this.setupDisks($tower);\n      }\n\n      this.$rootDom.append($tower);\n    }\n  }\n\n  setupDisks($tower0) {\n    for (let i = 1; i < 4; i++) {\n      const $disk = $(`<li class=\"disk\" data-size=\"${i}\"></li>`);\n      $tower0.append($disk);\n    }\n  }\n}\n\nmodule.exports = HanoiView;\n\n//# sourceURL=webpack:///./src/hanoi_view.js?");
+eval("class HanoiView {\n  constructor(game, $el) {\n    this.game = game;\n    this.$rootDom = $el;\n    this.setupTowers();\n    this.render();\n  }\n\n  setupTowers() {\n    for (let i = 0; i < 3; i++) {\n      const $tower = $(`<ul class=\"tower\" data-pos=\"${i}\"></ul>`);\n\n      this.$rootDom.append($tower);\n    }\n  }\n\n  render() {\n    this.game.board.towers.forEach((t, i) => {\n      for (let c = t.length - 1; c >= 0; c--) {\n        const $disk = $(`<li class=\"disk\" data-size=\"${t[c].size}\"></li>`);\n        $(`.tower[data-pos=\"${i}\"]`).append($disk);\n      }\n    });\n  }\n}\n\nmodule.exports = HanoiView;\n\n//# sourceURL=webpack:///./src/hanoi_view.js?");
 
 /***/ }),
 

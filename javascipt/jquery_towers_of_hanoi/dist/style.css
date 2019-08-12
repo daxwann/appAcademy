@@ -27,6 +27,11 @@ ul {
 }
 
 /* game style */
+.title {
+  font-size: 30px;
+  text-align: center;
+}
+
 .hanoi {
   width: 600px;
   background: #ccc;

@@ -3,25 +3,24 @@ class HanoiView {
     this.game = game;
     this.$rootDom = $el;
     this.setupTowers();
+    this.render();
   }
 
   setupTowers() {
     for (let i = 0; i < 3; i++) {
       const $tower = $(`<ul class="tower" data-pos="${i}"></ul>`);
 
-      if (i === 0) {
-        this.setupDisks($tower);
-      }
-
       this.$rootDom.append($tower);
     }
   }
 
-  setupDisks($tower0) {
-    for (let i = 1; i < 4; i++) {
-      const $disk = $(`<li class="disk" data-size="${i}"></li>`);
-      $tower0.append($disk);
-    }
+  render() {
+    this.game.board.towers.forEach((t, i) => {
+      for (let c = t.length - 1; c >= 0; c--) {
+        const $disk = $(`<li class="disk" data-size="${t[c].size}"></li>`);
+        $(`.tower[data-pos="${i}"]`).append($disk);
+      }
+    });
   }
 }
 
