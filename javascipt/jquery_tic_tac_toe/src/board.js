@@ -3,6 +3,7 @@ const MoveError = require("./moveError");
 class Board {
   constructor() {
     this.grid = Board.makeGrid();
+    this.winningSeq = null;
   }
 
   isEmptyPos(pos) {
@@ -70,6 +71,7 @@ class Board {
     for (let i = 0; i < posSeqs.length; i++) {
       const winner = this.winnerHelper(posSeqs[i]);
       if (winner != null) {
+        this.winningSeq = posSeqs[i];
         return winner;
       }
     }

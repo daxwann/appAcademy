@@ -23,9 +23,9 @@ class View {
     const pos = $square.data("pos").split(",").map(p => parseInt(p));
     const mark = this.game.currentPlayer;
     try {
-      const currentPlayer = this.game.currentPlayer;
+      const $currentPlayer = $(`<div class="mark">${this.game.currentPlayer}</div>`);
       this.game.playMove(pos);
-      $square.append(currentPlayer);
+      $square.append($currentPlayer);
       this.checkGame();
     } catch(e) {
       if (e instanceof MoveError) {
@@ -39,11 +39,29 @@ class View {
   checkGame() {
     if (this.game.winner()) {
       this.unbindEvents();
+      this.displayWinningSeq();
       this.displayWinner();
     } else if (this.game.isOver()) {
       this.unbindEvents();
       this.displayDraw();
     }
+  }
+
+  displayWinningSeq() {
+    this.game.board.winningSeq.forEach((pos) => {
+      const $sq = this.findSqByPos(pos);
+      console.log($sq);
+      this.changeSqColor($sq, "#6ED2FF");
+    });
+  }
+
+  findSqByPos(pos) {
+    const $sq = $(`[data-pos="${pos}"]`);
+    return $sq;
+  }
+
+  changeSqColor($sq, color) {
+    $sq.css("background-color", color);
   }
 
   displayWinner() {
