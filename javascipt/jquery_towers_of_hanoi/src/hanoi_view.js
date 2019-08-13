@@ -14,8 +14,8 @@ class HanoiView {
       const $tower = $(`<ul class="tower" data-pos="${i}"></ul>`);
 
       this.$rootDom.append($tower);
-      this.clickTower();
     }
+    this.clickTower();
   }
 
   render() {
@@ -29,32 +29,40 @@ class HanoiView {
   }
 
   clickTower() {
-    this.$rootDom.on("click", ".tower", (e) => {
-      console.log('clicked tower');
+    $(".tower").on("click", (e) => {
       const $currentTower = $(e.currentTarget);
       if (this.$fromTower === null) {
-        this.toggleFromTower($currentTower);
-      } else if ($currentTower === this.$fromTower) {
-        this.toggleFromTower($currentTower);
+        try {
+          this.selectFromTower($currentTower);
+        } catch(e) {
+          if (e instanceof MoveError) {
+            alert(e.msg);
+          } else {
+            alert(e);
+          }
+        }
+      } else if (this.getTowerIdx($currentTower) === this.getTowerIdx(this.$fromTower)) {
+        this.deselectFromTower();
       } else {
         this.moveToTower($currentTower);
       }
     });
   }
 
-  toggleFromTower($tower) {
-    if (!this.game.board.isValidStart(this.getTowerIdx($tower))) {
+  selectFromTower($tower) {
+    const fromTowerIdx = this.getTowerIdx($tower);
+
+    if (!this.game.board.isValidStart(fromTowerIdx)) {
       throw new MoveError("Can't start from tower with no disk");
-      return null;
     }
 
-    if (this.$fromTower === null) {
-      this.$fromTower = $tower;
-      this._toggleHighlight($tower);
-    } else {
-      this.$fromTower = null;
-      this._toggleHighlight($tower);
-    }
+    this.$fromTower = $tower;
+    this._toggleHighlight($tower);
+  }
+
+  deselectFromTower() {
+    this._toggleHighlight(this.$fromTower);
+    this.$fromTower = null;
   }
 
   _toggleHighlight($tower) {
@@ -64,19 +72,20 @@ class HanoiView {
   moveToTower($toTower) {
     const fromTowerIdx = this.getTowerIdx(this.$fromTower);
     const toTowerIdx = this.getTowerIdx($toTower);
+
     if (this.game.board.isValidMove(fromTowerIdx, toTowerIdx)) {
       this.game.board.moveDisk(fromTowerIdx, toTowerIdx);
       this.render();
-      this.toggleFromTower(this.$fromTower);
+      this.deselectFromTower();
     } else {
       throw new MoveError("Cannot move disk to this tower");
     }
   }
 
   getTowerIdx($tower) {
-    return parseInt($tower.data("pos"));
+    const idx = parseInt($tower.data("pos"));
+    return idx; 
   }
-
 }
 
 module.exports = HanoiView;
