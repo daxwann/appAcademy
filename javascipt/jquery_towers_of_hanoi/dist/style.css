@@ -51,6 +51,15 @@ ul {
   background-color: #000;
 }
 
+.tower:hover {
+  cursor: pointer;
+  background-color: #FFD939;
+}
+
+.tower.highlight {
+  background-color: #5883E8;
+}
+
 .disk {
   width: 50px;
   height: 10px;

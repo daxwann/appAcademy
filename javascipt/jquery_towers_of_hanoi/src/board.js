@@ -6,6 +6,16 @@ class Board {
     this.towers[0] = [new Disk(3), new Disk(2), new Disk(1)];
   }
 
+  isValidStart(startIdx) {
+    let startTowerLength = this.towers[startIdx].length;
+
+    if (startTowerLength === 0) {
+      return false;
+    }
+
+    return true;
+  }
+
   isValidMove(startIdx, endIdx) {
     let startTowerLength = this.towers[startIdx].length;
     let endTowerLength = this.towers[endIdx].length; 
