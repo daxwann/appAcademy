@@ -61,8 +61,22 @@ ul {
 }
 
 .disk {
-  width: 50px;
-  height: 10px;
-  border-radius: 30%;
-  background-color: #0CE80C;
+  height: 20px;
+  border-radius: 40%;
 }
+
+.disk[data-size="1"] {
+  width: 50px;
+  background-color: #0DFF56;
+}
+
+.disk[data-size="2"] {
+  width: 60px;
+  background-color: #8C50FF;
+}
+
+.disk[data-size="3"] {
+  width: 70px;
+  background-color: #E81300;
+}
+

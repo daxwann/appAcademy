@@ -44,7 +44,16 @@ class HanoiView {
       } else if (this.getTowerIdx($currentTower) === this.getTowerIdx(this.$fromTower)) {
         this.deselectFromTower();
       } else {
-        this.moveToTower($currentTower);
+        try {
+          this.moveToTower($currentTower);
+          this.checkWin();
+        } catch(e) {
+          if (e instanceof MoveError) {
+            alert(e.msg);
+          } else {
+            alert(e);
+          }
+        }
       }
     });
   }
@@ -85,6 +94,14 @@ class HanoiView {
   getTowerIdx($tower) {
     const idx = parseInt($tower.data("pos"));
     return idx; 
+  }
+
+  checkWin() {
+    if (this.game.board.isWon()) {
+      $(".tower").off("click");
+      const win = $("<p>You win!</p>");
+      this.$rootDom.append(win);
+    }
   }
 }
 
