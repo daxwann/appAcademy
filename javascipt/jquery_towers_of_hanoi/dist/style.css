@@ -30,6 +30,7 @@ ul {
 .title {
   font-size: 30px;
   text-align: center;
+  padding: 20px;
 }
 
 .hanoi {
@@ -78,5 +79,11 @@ ul {
 .disk[data-size="3"] {
   width: 70px;
   background-color: #E81300;
+}
+
+.win {
+  font-size: 30px;
+  padding: 10px;
+  text-align: center;
 }
 

@@ -99,8 +99,8 @@ class HanoiView {
   checkWin() {
     if (this.game.board.isWon()) {
       $(".tower").off("click");
-      const win = $("<p>You win!</p>");
-      this.$rootDom.append(win);
+      const win = $('<p class="win">You win!</p>');
+      this.$rootDom.after(win);
     }
   }
 }
