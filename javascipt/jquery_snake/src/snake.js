@@ -4,3 +4,5 @@ class Snake {
     this.direction = null;
   }
 }
+
+module.exports = Snake;
