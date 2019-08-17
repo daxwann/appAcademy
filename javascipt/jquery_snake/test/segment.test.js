@@ -1,15 +1,15 @@
 const Segment = require("../src/segment.js");
 
 describe("Segment class", () => {
-  const head = new Segment([50, 50], [0, 0]);
+  const head = new Segment([50, 50]);
 
   test("new head has no prev or next segment, no direction", () => {
     expect(head).toEqual(
       {
         pos: [50, 50],
         dir: [0, 0],
-        prev: null,
-        next: null
+        front: null,
+        back: null
       }
     )
   });
@@ -28,16 +28,16 @@ describe("Segment class", () => {
     )
   });
 
-  test("Segment#addNext adds new segment opposite to the previous segment's direction", () => {
-    head.addNext();
+  test("Segment#addToBack() adds new segment behind the head in its previous position", () => {
+    head.addToBack();
 
-    const seg2 = head.next;
+    const seg2 = head.back;
     expect(seg2).toEqual(
       {
         pos: [50, 50],
         dir: [1, 0],
-        prev: head,
-        next: null
+        front: head,
+        back: null
       }
     );
   });

@@ -1,9 +1,9 @@
 class Segment {
-  constructor(pos, dir, prev=null) {
+  constructor(pos, dir=[0, 0], front=null) {
     this.pos = pos,
     this.dir = dir,
-    this.prev = prev,
-    this.next = null
+    this.front = front,
+    this.back = null
   }
 
   changeDir(dir) {
@@ -17,7 +17,8 @@ class Segment {
     this.pos = [x + dx, y + dy];
   }
 
-  addNext() {
+  addToBack() {
+    // disable functionality when not moving
     if (this.dir === [0, 0]) {
       return null;
     }
@@ -25,8 +26,15 @@ class Segment {
     const [x, y] = this.pos;
     const [dx, dy] = this.dir;
     const newSegPos = [x - dx, y - dy];
+    const prevBack = this.back;
 
-    this.next = new Segment(newSegPos, this.dir, this);
+    // create new segment behind current segment
+    this.back = new Segment(newSegPos, this.dir, this);
+
+    // link rest of snake to new segment
+    if (prevBack) {
+      prevBack.front = this.back;
+    }
   }
 }
 
