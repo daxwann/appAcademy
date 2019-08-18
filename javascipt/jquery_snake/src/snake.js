@@ -23,6 +23,30 @@ class Snake {
     this.head.move();
     this.head.addToBack();
   }
+
+  positions() {
+    const positions = [];
+    let seg = this.head
+
+    while (seg) {
+      positions.push(seg.pos);
+      seg = seg.back;
+    }
+
+    return positions;
+  }
+
+  hasEatenItself() {
+    const behindHeadPos = this.positions.slice(1);
+
+    behindHeadPos.forEach((pos) => {
+      if (JSON.stringify(pos) === JSON.stringify(this.head.pos)) {
+        return true;
+      }
+    });
+
+    return false;
+  }
 }
 
 Snake.DIRECTIONS = {
