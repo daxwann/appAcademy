@@ -18,11 +18,6 @@ class Segment {
   }
 
   addToBack() {
-    // disable functionality when not moving
-    if (this.dir === [0, 0]) {
-      return null;
-    }
-
     const [x, y] = this.pos;
     const [dx, dy] = this.dir;
     const newSegPos = [x - dx, y - dy];
@@ -34,6 +29,7 @@ class Segment {
     // link rest of snake to new segment
     if (prevBack) {
       prevBack.front = this.back;
+      this.back.back = prevBack;
     }
   }
 }

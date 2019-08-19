@@ -52,4 +52,22 @@ describe("Snake class", () => {
       }
     );
   });
+
+  test("Snake#positions returns array of all positions of snake in order", () => {
+    snake.grow();
+    snake.grow();
+    const positions = snake.positions();
+    expect(positions).toEqual([[54, 50], [53, 50], [52, 50], [51, 50]]);
+  });
+
+  test("Snake#hasEatenItself returns true if head collides with body", () => {
+    snake.grow();
+    snake.turn("N");
+    snake.move();
+    snake.turn("W");
+    snake.move();
+    snake.turn("S");
+    snake.move();
+    expect(snake.hasEatenItself()).toBeTruthy();
+  })
 });

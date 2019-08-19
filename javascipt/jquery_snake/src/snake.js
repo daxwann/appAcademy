@@ -13,9 +13,9 @@ class Snake {
   move(seg=this.head) {
     seg.move();
   
-    if (seg.prev) {
-      this.move(seg.prev);
-      seg.prev.changeDir(this.dir);
+    if (seg.back) {
+      this.move(seg.back);
+      seg.back.changeDir(seg.dir);
     }
   }
 
@@ -24,28 +24,23 @@ class Snake {
     this.head.addToBack();
   }
 
-  positions() {
+  positions(start=this.head) {
     const positions = [];
-    let seg = this.head
 
-    while (seg) {
-      positions.push(seg.pos);
-      seg = seg.back;
+    while (start) {
+      positions.push(start.pos);
+      start = start.back;
     }
 
     return positions;
   }
 
   hasEatenItself() {
-    const behindHeadPos = this.positions.slice(1);
+    const bodyPos = this.positions(this.head.back);
 
-    behindHeadPos.forEach((pos) => {
-      if (JSON.stringify(pos) === JSON.stringify(this.head.pos)) {
-        return true;
-      }
+    return bodyPos.some((pos) => {
+      return JSON.stringify(pos) === JSON.stringify(this.head.pos);
     });
-
-    return false;
   }
 }
 
