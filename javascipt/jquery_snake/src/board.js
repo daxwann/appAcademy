@@ -7,19 +7,24 @@ class Board {
     this.height = y;
     this.snake = new Snake([Math.floor(x / 2), Math.floor(y / 2)]);
     this.grid = Board.makeGrid(x, y);
+    this.placeSnake();
   }
 
-  placeSnakeOnBoard() {
-    this.snake.positions.forEach((pos) => {
+  placeSnake() {
+    this.snake.positions().forEach((pos) => {
       const [x, y] = pos;
 
       this.grid[y][x] = "S";
     });
   }
 
+  placeApple() {
+
+  }
+
   clear() {
-    this.grid.forEach((row) => {
-      row = row.map(tile => null);
+    this.grid.forEach((row, idx) => {
+      this.grid[idx] = row.map(tile => null);
     })
   }
 
@@ -46,3 +51,5 @@ class Board {
     return grid;
   }
 }
+
+module.exports = Board;
