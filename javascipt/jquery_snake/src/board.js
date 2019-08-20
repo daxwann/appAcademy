@@ -7,7 +7,13 @@ class Board {
     this.height = y;
     this.snake = new Snake([Math.floor(x / 2), Math.floor(y / 2)]);
     this.grid = Board.makeGrid(x, y);
+    this.apple = new Apple();
+    this.placeObjects();
+  }
+
+  placeObjects() {
     this.placeSnake();
+    this.placeApple();
   }
 
   placeSnake() {
@@ -19,7 +25,8 @@ class Board {
   }
 
   placeApple() {
-
+    const [x, y] = this.apple.randPos(this);
+    this.grid[y][x] = "A";
   }
 
   clear() {

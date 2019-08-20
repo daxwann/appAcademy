@@ -12,6 +12,12 @@ describe("Board class", () => {
     expect(bd.grid[50][50]).toBe("S");
   })
 
+  test("board has an apple with position within boundary", () => {
+    const [x, y] = bd.apple.pos;
+    expect(x >= 0 && x < bd.width).toBeTruthy();
+    expect(y >= 0 && y < bd.height).toBeTruthy();
+  })
+
   test("Board#clear clears the board", () => {
     bd.clear();
     expect(bd.grid.every((row) => {
