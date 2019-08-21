@@ -20,12 +20,20 @@ class Board {
     this.snake.positions().forEach((pos) => {
       const [x, y] = pos;
 
+      if (JSON.stringify(pos) === JSON.stringify(this.apple.pos)) {
+        this.apple.pos = null;
+      }
+
       this.grid[y][x] = "S";
     });
   }
 
+  isMatchingPos(pos1, pos2) {
+    return JSON.stringify(pos1) === JSON.stringify(this.pos2);
+  }
+
   placeApple() {
-    const [x, y] = this.apple.randPos(this);
+    const [x, y] = this.apple.pos || this.apple.randPos(this);
     this.grid[y][x] = "A";
   }
 
