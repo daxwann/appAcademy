@@ -3,15 +3,18 @@ const Segment = require("./segment.js");
 class Snake {
   constructor(startPos=[50,50]) {
     this.head = new Segment(startPos);
+    this.dir = null;
     this.growSize = 0;
   }
 
   turn(dir, seg=this.head) {
-    const [x, y] = Snake.DIRECTIONS[dir];
+    const vel = Snake.DIRECTIONS[dir];
 
     if (this.positions().length > 1 && dir === this.oppositeDir(this.dir)) {
       return;
     }
+
+    this.dir = dir;
     seg.changeDir(vel);
   }
 

@@ -2,7 +2,7 @@ const Board = require("./board.js");
 
 class GameView {
   constructor($root) {
-    this.board = new Board(100, 80);
+    this.board = new Board(50, 25);
     this.$root = $root;
     this.intervalId = null;
     this.paused = false;
@@ -12,7 +12,7 @@ class GameView {
 
   start() {
     this.enableKeyEvents();
-    this.intervalId = setInterval(this.animate.bind(this), 500);
+    this.intervalId = setInterval(this.animate.bind(this), 80);
     this.paused = false;
   }
 
@@ -69,22 +69,18 @@ class GameView {
     switch(event.keyCode || event.which) {
       case 37: //left : turn west
         this.board.snake.turn("W");
-        this.animate();
       break;
 
       case 38: //up : turn north
         this.board.snake.turn("N");
-        this.animate();
       break;
 
       case 39: //right : turn east
         this.board.snake.turn("E");
-        this.animate();
       break;
 
       case 40: //down : turn south
         this.board.snake.turn("S");
-        this.animate();
       break;
 
       case 32: //space : pause
@@ -131,8 +127,7 @@ class GameView {
   }
 
   displayOverMessage() {
-    const $msg = $('<p class="over-msg">Game Over</p>');
-    this.$root.after($msg);
+    alert("Game Over");
   }
 
   restart() {
