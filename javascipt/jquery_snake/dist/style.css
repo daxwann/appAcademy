@@ -1,0 +1,71 @@
+html, body, header, nav, h1, a,
+ul, li, strong, main, button, i,
+section, img, div, h2, p, form,
+fieldset, label, input, textarea,
+span, article, footer, time, small {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  outline: 0;
+  font: inherit;
+  color: inherit;
+  text-align: inherit;
+  text-decoration: inherit;
+  vertical-align: inherit;
+  box-sizing: inherit;
+  background: transparent;
+}
+
+body {
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+.snake-game {
+  padding: 0;
+  margin: 0;
+}
+
+.board {
+  padding: 0;
+  margin: 0 auto;
+  width: 1000px;
+  height: 800px;
+  display: grid;
+  grid-template-columns: repeat(100, 1fr);
+  grid-template-rows: repeat(80, 1fr);
+  align-items: stretch;
+  border-left: 1px solid #000;
+  border-top: 1px solid #000;
+}
+
+.tile {
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid #000;
+  border-right: 1px solid #000;
+  background-color: #ccc;
+}
+
+.snake {
+  background-color: #20E83E;
+}
+
+.apple {
+  background-color: #E81B0C;
+}
+
+.title {
+  font-size: 30px;
+  text-align: center;
+  padding: 20px;
+}
+
+.over-msg {
+  font-size: 30px;
+  text-align: center;
+  padding: 20px;
+}

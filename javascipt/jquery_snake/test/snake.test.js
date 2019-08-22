@@ -38,6 +38,11 @@ describe("Snake class", () => {
     );
   });
 
+  test("Snake#addGrowSize adds number of segments to be added", () => {
+    snake.addGrowSize();
+    expect(snake.growSize).toBe(5);
+  })
+
   test("Snake#grow() adds one segment behind the head of the snake as it moves", () => {
     snake.grow();
     expect(snake.head.pos).toEqual(
@@ -51,13 +56,16 @@ describe("Snake class", () => {
         dir: [1, 0]
       }
     );
+    expect(snake.growSize).toBe(4);
   });
 
   test("Snake#positions returns array of all positions of snake in order", () => {
     snake.grow();
     snake.grow();
+    snake.grow();
+    snake.grow();
     const positions = snake.positions();
-    expect(positions).toEqual([[54, 50], [53, 50], [52, 50], [51, 50]]);
+    expect(positions).toEqual([[56, 50], [55, 50], [54, 50], [53, 50], [52, 50], [51, 50]]);
   });
 
   test("Snake#hasEatenItself returns true if head collides with body", () => {

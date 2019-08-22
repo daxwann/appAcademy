@@ -8,30 +8,24 @@ describe("Board class", () => {
     expect(bd.grid[0].length).toBe(100);
   })
 
-  test("board has 'S' positioned at coordinate [50, 50]", () => {
-    expect(bd.grid[50][50]).toBe("S");
-  })
-
   test("board has an apple with position within boundary", () => {
     const [x, y] = bd.apple.pos;
     expect(x >= 0 && x < bd.width).toBeTruthy();
     expect(y >= 0 && y < bd.height).toBeTruthy();
   })
 
-  test("Board#clear clears the board", () => {
-    bd.clear();
-    expect(bd.grid.every((row) => {
-      return row.every(tile => tile === null);
-    })).toBeTruthy();
-  })
-
-  test("Board#placeSnake puts snake on board", () => {
-    bd.placeSnake();
-    expect(bd.grid[50][50]).toBe("S");
-  })
-
   test("Board#isInBound(pos)", () => {
-    bd.snake.pos = [100, 99];
-    expect(bd.isInBound(bd.snake.pos)).toBeFalsy();
+    expect(bd.isInBound([100, 99])).toBeFalsy();
+  })
+
+  test("Board#isSnakeInBound", () => {
+    bd.snake.head.pos = [100, 99];
+    expect(bd.isSnakeInBound()).toBeFalsy();
+  })
+
+  test("Board#didSnakeEatApple", () => {
+    bd.apple.pos = [60, 60];
+    bd.snake.head.pos = [60, 60];
+    expect(bd.didSnakeEatApple()).toBeTruthy();
   })
 })

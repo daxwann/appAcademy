@@ -8,39 +8,25 @@ class Board {
     this.snake = new Snake([Math.floor(x / 2), Math.floor(y / 2)]);
     this.grid = Board.makeGrid(x, y);
     this.apple = new Apple();
-    this.placeObjects();
+    this.placeRandomApple();
   }
 
-  placeObjects() {
-    this.placeSnake();
-    this.placeApple();
+  isSnakeInBound() {
+    return this.snake.positions().every((pos) => {
+      return this.isInBound(pos);
+    })
   }
 
-  placeSnake() {
-    this.snake.positions().forEach((pos) => {
-      const [x, y] = pos;
-
-      if (JSON.stringify(pos) === JSON.stringify(this.apple.pos)) {
-        this.apple.pos = null;
-      }
-
-      this.grid[y][x] = "S";
-    });
+  didSnakeEatApple() {
+    return JSON.stringify(this.snake.head.pos) === JSON.stringify(this.apple.pos);
   }
 
   isMatchingPos(pos1, pos2) {
     return JSON.stringify(pos1) === JSON.stringify(this.pos2);
   }
 
-  placeApple() {
-    const [x, y] = this.apple.pos || this.apple.randPos(this);
-    this.grid[y][x] = "A";
-  }
-
-  clear() {
-    this.grid.forEach((row, idx) => {
-      this.grid[idx] = row.map(tile => null);
-    })
+  placeRandomApple() {
+    this.apple.pos = this.apple.randPos(this);
   }
 
   isInBound(pos) {
