@@ -8,6 +8,17 @@
   overflow: hidden;
 }
 
+[class*="icon-small-"] {
+  background-size: 20px;
+  width: 20px;
+  height: 20px;
+  padding-top: 0;
+}
+
+.profile-nav ul li a {
+  display: flex;
+}
+
 .icon-comment {
   background-position: 0px 0px;
 }
@@ -32,3 +43,18 @@
   background-position: 0px -125px;
 }
 
+.icon-small-wall {
+  background-position: 0px -180px;
+}
+
+.icon-small-about {
+  background-position: 0px -140px;
+}
+
+.icon-small-photos {
+  background-position: 0px -160px;
+}
+
+.icon-small-friends {
+  background-position: 0px -120px;
+}
