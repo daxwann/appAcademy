@@ -108,6 +108,14 @@ const APIUtils = {
       url: `/users/${id}/follow`,
       dataType: "json"
     });
+  },
+
+  searchUsers: queryVal => {
+    return $.ajax({
+      method: "GET",
+      url: `/users/search`,
+      dataType: "json"
+    });
   }
 }
 
@@ -177,12 +185,38 @@ module.exports = FollowToggle;
 /***/ (function(module, exports, __webpack_require__) {
 
 const FollowToggle = __webpack_require__(/*! ./follow_toggle.js */ "./frontend/follow_toggle.js");
+const UsersSearch = __webpack_require__(/*! ./users_search.js */ "./frontend/users_search.js");
 
 $(() => {
   $(".follow-toggle").each((idx, el) => {
     const followToggle = new FollowToggle($(el));
   });
+
+  $("nav.users-search").each((idx, el) => {
+    const usersSearch = new UsersSearch($(el));
+  })
 });
+
+/***/ }),
+
+/***/ "./frontend/users_search.js":
+/*!**********************************!*\
+  !*** ./frontend/users_search.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+const APIUtils = __webpack_require__(/*! ./api_utils.js */ "./frontend/api_utils.js");
+
+class UsersSearch {
+  constructor($el) {
+    this.$searchEl = $el;
+    this.$input = $el.find("input")[0];
+    this.$result = $el.find("ul")[0];
+  }
+}
+
+module.exports = UsersSearch;
 
 /***/ })
 

@@ -39,6 +39,8 @@ class UsersController < ApplicationController
       @users = User.none
     end
 
+    @query = params[:query];
+
     render :search
   end
 
