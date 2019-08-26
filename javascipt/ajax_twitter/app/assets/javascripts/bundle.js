@@ -86,14 +86,75 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./frontend/follow_toggle.js":
+/*!***********************************!*\
+  !*** ./frontend/follow_toggle.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+class FollowToggle {
+  constructor($el) {
+    this.userId = $el.data("userId");
+    this.followState = $el.data("initialFollowState");
+    this.$followEl = $el;
+    this.render();
+    this.handleClick();
+  }
+
+  render() {
+    if (this.followState === "followed") {
+      this.$followEl.text("Unfollow");
+    } else if (this.followState === "unfollowed") {
+      this.$followEl.text("Follow");
+    }
+  }
+
+  handleClick() {
+    this.$followEl.on("click", (e) => {
+      e.preventDefault();
+
+      if (this.followState === "unfollowed") {
+        $.ajax({
+          method: "POST",
+          url: `/users/${this.userId}/follow`,
+          dataType: "json"
+        }).then((r) => {
+          this.followState = "followed";
+          this.render();
+        });
+      } else if (this.followState === "followed") {
+        $.ajax({
+          method: "DELETE",
+          url: `/users/${this.userId}/follow`,
+          dataType: "json"
+        }).then(() => {
+          this.followState = "unfollowed";
+          this.render();
+        });
+      }
+    });
+  }
+}
+
+module.exports = FollowToggle;
+
+/***/ }),
+
 /***/ "./frontend/twitter.js":
 /*!*****************************!*\
   !*** ./frontend/twitter.js ***!
   \*****************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
+const FollowToggle = __webpack_require__(/*! ./follow_toggle.js */ "./frontend/follow_toggle.js");
 
+$(() => {
+  $(".follow-toggle").each((idx, el) => {
+    const followToggle = new FollowToggle($(el));
+  });
+});
 
 /***/ })
 

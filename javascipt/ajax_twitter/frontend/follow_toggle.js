@@ -1,10 +1,10 @@
 class FollowToggle {
   constructor($el) {
-    $followEl = $el;
-    this.userId = $followEl.data("user-id");
-    this.followState = $followEl.data("initial-follow-state");
-    this.$followEl = $followEl;
+    this.userId = $el.data("userId");
+    this.followState = $el.data("initialFollowState");
+    this.$followEl = $el;
     this.render();
+    this.handleClick();
   }
 
   render() {
@@ -22,21 +22,21 @@ class FollowToggle {
       if (this.followState === "unfollowed") {
         $.ajax({
           method: "POST",
-          url: `/users/${}/follow`,
-          data: {user_id: }
+          url: `/users/${this.userId}/follow`,
           dataType: "json"
-        }).then(() => {
+        }).then((r) => {
           this.followState = "followed";
           this.render();
-        })
+        });
       } else if (this.followState === "followed") {
         $.ajax({
           method: "DELETE",
           url: `/users/${this.userId}/follow`,
+          dataType: "json"
         }).then(() => {
           this.followState = "unfollowed";
           this.render();
-        }
+        });
       }
     });
   }
