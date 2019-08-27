@@ -41,7 +41,10 @@ class UsersController < ApplicationController
 
     @query = params[:query];
 
-    render :search
+    respond_to do |format|
+      format.html { render :search }
+      format.json { render json: @users }
+    end
   end
 
   protected
