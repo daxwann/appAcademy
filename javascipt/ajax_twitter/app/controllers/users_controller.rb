@@ -43,7 +43,8 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html { render :search }
-      format.json { render json: @users }
+      format.json { render :search } # jBuilder
+      # format.json { render json: @users }
     end
   end
 
